@@ -210,6 +210,18 @@
     <Compile Include="Migrations\201808041811520_AddBooksTable.Designer.cs">
       <DependentUpon>201808041811520_AddBooksTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808041841260_AddGenresTable.cs" />
+    <Compile Include="Migrations\201808041841260_AddGenresTable.Designer.cs">
+      <DependentUpon>201808041841260_AddGenresTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808041848105_UpdateBooksModel.cs" />
+    <Compile Include="Migrations\201808041848105_UpdateBooksModel.Designer.cs">
+      <DependentUpon>201808041848105_UpdateBooksModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808041908121_PopulateGenresTable.cs" />
+    <Compile Include="Migrations\201808041908121_PopulateGenresTable.Designer.cs">
+      <DependentUpon>201808041908121_PopulateGenresTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -218,6 +230,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BookViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -306,6 +319,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808041811520_AddBooksTable.resx">
       <DependentUpon>201808041811520_AddBooksTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808041841260_AddGenresTable.resx">
+      <DependentUpon>201808041841260_AddGenresTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808041848105_UpdateBooksModel.resx">
+      <DependentUpon>201808041848105_UpdateBooksModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808041908121_PopulateGenresTable.resx">
+      <DependentUpon>201808041908121_PopulateGenresTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

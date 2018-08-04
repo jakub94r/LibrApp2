@@ -10,5 +10,7 @@ namespace LibrApp2.Models
         public int Id { get; set; }
         public String Name { get; set; }
         public DateTime? DatePublished { get; set; }
+        public Genre Genre { get; set; }
+        public byte GenreId { get; set; }
     }
 }

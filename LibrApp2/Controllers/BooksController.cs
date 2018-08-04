@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LibrApp2.Models;
+using LibrApp2.ViewModels;
 
 namespace LibrApp2.Controllers
 {
@@ -27,7 +28,8 @@ namespace LibrApp2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+
+            Book book = db.Books.Include(b => b.Genre).SingleOrDefault(b => b.Id == id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -38,7 +40,12 @@ namespace LibrApp2.Controllers
         // GET: Books/Create
         public ActionResult Create()
         {
-            return View();
+            var GenresList = db.Genres.ToList();
+            var bookViewModel = new BookViewModel()
+            {
+                Genres = GenresList
+            };
+            return View(bookViewModel);
         }
 
         // POST: Books/Create
@@ -46,7 +53,7 @@ namespace LibrApp2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,DatePublished")] Book book)
+        public ActionResult Create([Bind(Include = "Id,Name,DatePublished,GenreId")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -66,11 +73,18 @@ namespace LibrApp2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Book book = db.Books.Find(id);
+            var GenresList = db.Genres.ToList();
+            var bookViewModel = new BookViewModel()
+            {
+                Book = db.Books.Find(id),
+                Genres = GenresList
+            };
+
             if (book == null)
             {
                 return HttpNotFound();
             }
-            return View(book);
+            return View(bookViewModel);
         }
 
         // POST: Books/Edit/5
@@ -78,7 +92,7 @@ namespace LibrApp2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,DatePublished")] Book book)
+        public ActionResult Edit([Bind(Include = "Id,Name,DatePublished,GenreId")] Book book)
         {
             if (ModelState.IsValid)
             {
