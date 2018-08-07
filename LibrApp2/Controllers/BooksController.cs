@@ -18,7 +18,7 @@ namespace LibrApp2.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            return View(db.Books.ToList());
+            return View(db.Books.Include(b => b.Genre).ToList());
         }
 
         // GET: Books/Details/5

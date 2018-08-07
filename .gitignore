@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /LibrApp2/Views/Books1
+/LibrApp2/Views/Home/ToDo.cshtml
