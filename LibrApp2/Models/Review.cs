@@ -11,6 +11,7 @@ namespace LibrApp2.Models
         public int Id { get; set; }
 
         [StringLength(255)]
+        [Display(Name = "Review")]
         public string Content { get; set; }
 
         [Range(1, 10, ErrorMessage = "Please enter a value between {1} and {2}")]

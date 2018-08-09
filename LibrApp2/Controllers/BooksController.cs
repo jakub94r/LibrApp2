@@ -136,7 +136,7 @@ namespace LibrApp2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Book book = db.Books.Include(b => b.Genre).SingleOrDefault(b => b.Id == id);
+            Book book = db.Books.Include(b => b.Genre).Include(b => b.Reviews).Include(b => b.Authors).SingleOrDefault(b => b.Id == id);
             if (book == null)
             {
                 return HttpNotFound();

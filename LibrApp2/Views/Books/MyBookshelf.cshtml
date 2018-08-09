@@ -6,48 +6,50 @@
 
 <h2>Hello @Model.Username, this is Your bookshelf</h2>
 
-<table class="table">
-    @*<tr>
-            @using (Html.BeginForm())
-            {
-                <p>
-                    Genre: @Html.DropDownList("bookGenre", "All")
-                    Title: @Html.TextBox("SearchString") <br />
-                    <input type="submit" value="Filter" />
-                </p>
-            }
-        </tr>*@
+<table class="table table-hover table-bordered">
+    <thead>
+        @*<tr>
+                @using (Html.BeginForm())
+                {
+                    <p>
+                        Genre: @Html.DropDownList("bookGenre", "All")
+                        Title: @Html.TextBox("SearchString") <br />
+                        <input type="submit" value="Filter" />
+                    </p>
+                }
+            </tr>*@
 
-    <tr>
-        <th>
-            <label>Book</label>
-        </th>
-        <th>
-            <label>Actions</label>
-        </th>
-    </tr>
-
-    @foreach (var book in Model.Books)
-    {
         <tr>
-            <td>
-                @Html.ActionLink(book.Name, "Details", new { id = book.Id }, null)
-            </td>
-
-            <td>
-                @Html.ActionLink("Remove from bookshelf", "RemoveFromBookshelf", new { id = book.Id }) |
-                @if (!Model.Reviews.Where(b => b.BookId == book.Id).Any())
-                {
-                    @Html.ActionLink("Add Review", "AddReview", "Reviews", new { id = book.Id }, null)
-                }
-                else
-                {
-                    @Html.Label(" Already reviewed |  ")
-                    @Html.ActionLink("Show review", "ShowSingleReview", "Reviews", new { id = book.Id }, null)
-                }
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Books.FirstOrDefault().Name)
+            </th>
+            <th>
+                <label>Actions</label>
+            </th>
         </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(book.Name, "Details", new { id = book.Id }, null)
+                </td>
 
-    }
+                <td>
+                    @Html.ActionLink("Remove from bookshelf", "RemoveFromBookshelf", new { id = book.Id }) |
+                    @if (!Model.Reviews.Where(b => b.BookId == book.Id).Any())
+                    {
+                        @Html.ActionLink("Add Review", "AddReview", "Reviews", new { id = book.Id }, null)
+                    }
+                    else
+                    {
+                        @Html.Label(" Already reviewed |")
+                        @Html.ActionLink(" Show review", "ShowSingleReview", "Reviews", new { id = book.Id }, null)
+                    }
+                </td>
+            </tr>
 
+        }
+    </tbody>
 </table>

@@ -4,38 +4,47 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h3>@Model.Name - details</h3>
+<table class="table table-hover table-bordered">
+    <thead>
+    <th class="col-md-4">@Html.DisplayNameFor(model => model.Name)</th>
+    <th class="col-md-2">@Html.DisplayNameFor(model => model.DatePublished)</th>
+    <th class="col-md-2">@Html.DisplayNameFor(model => model.Genre)</th>
+    <th class="col-md-4">@Html.DisplayNameFor(model => model.Authors)</th>
+    </thead>
+    <tbody>
+    <td>
+        @Html.ActionLink(Model.Name, "Edit", new { id = Model.Id }, null)
+    </td>
+    <td>
+        @Model.DatePublished.Value.ToShortDateString()
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.Genre.Name)
+    </td>
+    <td>
+        @String.Join(", ", Model.Authors.Select(a => a.FullName).ToArray())
+    </td>
+    </tbody>
+</table>
 
-<div>
-    <h4>Book</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<h4>Reviews for @Model.Name:</h4>
+<table class="table table-hover table-bordered">
+    <thead>
+    <th class="col-md-1">@Html.DisplayNameFor(model => model.Reviews.First().Rate)</th>
+    <th class="col-md-9">@Html.DisplayNameFor(model => model.Reviews.First().Content)</th>
+    <th class="col-md-2">@Html.DisplayNameFor(model => model.Reviews.First().UserProfile.Username)</th>
+    </thead>
+    <tbody>
+        @foreach (var review in Model.Reviews)
+        {
+            <td>@review.Rate/10</td>
+            <td>@review.Content</td>
+            <td>@review.UserProfile.Username</td>
+        }
+    </tbody>
+</table>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DatePublished)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DatePublished)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Genre.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Genre.Name)
-        </dd>
-
-    </dl>
-</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
