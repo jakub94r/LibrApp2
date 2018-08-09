@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LibrApp2.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LibrApp2.Controllers
 {
@@ -157,6 +158,11 @@ namespace LibrApp2.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    /*var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    await roleManager.CreateAsync(new IdentityRole("Admin"));
+                    await UserManager.AddToRoleAsync(user.Id, "Admin");*/
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
 

@@ -25,6 +25,6 @@
 
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = Model.BookId }) |
-            @Html.ActionLink("Delete", "Delete", new { userId = Model.UserProfile.AspNetUserId, bookId = Model.BookId })
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
         </td>
     </tr>

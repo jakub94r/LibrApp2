@@ -244,6 +244,10 @@
     <Compile Include="Migrations\201808091138119_AddReviewsModel.Designer.cs">
       <DependentUpon>201808091138119_AddReviewsModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808091609436_SeedUsers.cs" />
+    <Compile Include="Migrations\201808091609436_SeedUsers.Designer.cs">
+      <DependentUpon>201808091609436_SeedUsers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
@@ -384,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808091138119_AddReviewsModel.resx">
       <DependentUpon>201808091138119_AddReviewsModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808091609436_SeedUsers.resx">
+      <DependentUpon>201808091609436_SeedUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -111,14 +111,14 @@ namespace LibrApp2.Controllers
             return View(review);
         }
 
-        // GET: Reviews/Delete/5
-        public ActionResult Delete(string userId, int? bookId)
+        // GET: Books/Delete/5
+        public ActionResult Delete(int? id)
         {
-            if (userId == null || bookId == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.SingleOrDefault(r => r.UserProfile.AspNetUserId == userId && r.BookId == bookId);
+            Review review = db.Reviews.Find(id);
             if (review == null)
             {
                 return HttpNotFound();
@@ -126,15 +126,15 @@ namespace LibrApp2.Controllers
             return View(review);
         }
 
-        // POST: Reviews/Delete/5
+        // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string userId, int? bookId)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Review review = db.Reviews.SingleOrDefault(r => r.UserProfile.AspNetUserId == userId && r.BookId == bookId);
+            Review review = db.Reviews.Find(id);
             db.Reviews.Remove(review);
             db.SaveChanges();
-            return RedirectToAction("MyBookshelf", "Books");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
