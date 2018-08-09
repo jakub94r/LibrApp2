@@ -27,5 +27,8 @@ namespace LibrApp2.Models
 
         [Display(Name = "Author")]
         public ICollection<Author> Authors { get; set; }
+
+        [Display(Name = "Users")]
+        public ICollection<UserProfile> UserProfiles { get; set; }
     }
 }

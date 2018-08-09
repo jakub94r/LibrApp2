@@ -45,6 +45,21 @@
     </tbody>
 </table>
 
+<h4>Users who have this book on their bookshelf</h4>
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.UserProfiles)</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var user in Model.UserProfiles)
+        {
+            <td>@Html.ActionLink(user.Username, "Details", "UserProfiles", new { id = user.Id }, null )</td>
+        }
+    </tbody>
+</table>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

@@ -16,9 +16,10 @@ namespace LibrApp2.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [Authorize]
+        [HttpGet]
         public ActionResult MyBookshelf()
         {
-
             var currentUserId = User.Identity.GetUserId();
             var currentUser = db.UserProfiles.SingleOrDefault(s => s.AspNetUserId == currentUserId);
 
@@ -28,6 +29,8 @@ namespace LibrApp2.Controllers
             return View(currentUser);
         }
 
+        [Authorize]
+        [HttpGet]
         public ActionResult AddToBookshelf(int id)
         {
             var currentUserId = User.Identity.GetUserId();
@@ -43,6 +46,8 @@ namespace LibrApp2.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
+        [HttpGet]
         public ActionResult RemoveFromBookshelf(int id)
         {
             var currentUserId = User.Identity.GetUserId();
@@ -57,6 +62,7 @@ namespace LibrApp2.Controllers
             return RedirectToAction("MyBookshelf");
         }
 
+        [HttpGet]
         public ActionResult ShowAvailableAuthors(int bookId)
         {
             Book book = db.Books.Include(b => b.Authors).SingleOrDefault(b => b.Id == bookId);
@@ -82,6 +88,7 @@ namespace LibrApp2.Controllers
             return View(authorToBook);
         }
 
+        [HttpGet]
         public ActionResult AddAuthorToBook(int bookId, int authorId)
         {
             Book book = db.Books.SingleOrDefault(b => b.Id == bookId);
@@ -101,6 +108,7 @@ namespace LibrApp2.Controllers
             return RedirectToAction("ShowAvailableAuthors", new { bookId = bookId });
         }
 
+        [HttpGet]
         public ActionResult RemoveAuthorFromBook(int bookId, int authorId)
         {
             Book book = db.Books.Include(b => b.Authors).SingleOrDefault(b => b.Id == bookId);
@@ -136,7 +144,7 @@ namespace LibrApp2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Book book = db.Books.Include(b => b.Genre).Include(b => b.Reviews).Include(b => b.Authors).SingleOrDefault(b => b.Id == id);
+            Book book = db.Books.Include(b => b.Genre).Include(b => b.Reviews).Include(b => b.Authors).Include(b => b.UserProfiles).SingleOrDefault(b => b.Id == id);
             if (book == null)
             {
                 return HttpNotFound();

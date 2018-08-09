@@ -6,25 +6,30 @@
 <h2>Your review of "@Model.Book.Name"</h2>
 
 <table class="table table-hover table-bordered">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rate)
-        </th>
-    </tr>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => modelItem.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => modelItem.Rate)/10
-        </td>
-
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.BookId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
-        </td>
-    </tr>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Rate)/10
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+            </td>
+        </tr>
+    </tbody>
+</table>
