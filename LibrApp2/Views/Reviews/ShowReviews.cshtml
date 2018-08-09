@@ -1,0 +1,48 @@
+﻿@model IEnumerable<LibrApp2.Models.Review>
+
+@{
+    ViewBag.Title = "Show Reviews";
+}
+
+<h2>ShowReviews</h2>
+
+
+@{
+    if (Model.Any())
+    {
+        <table class="table table-hover table-bordered">
+
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserProfile.Username)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserProfile.Username)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <p>This book has no reviews.</p>
+    }
+}

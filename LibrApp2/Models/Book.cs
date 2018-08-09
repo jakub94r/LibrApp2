@@ -9,6 +9,7 @@ namespace LibrApp2.Models
     {
         public Book()
         {
+            this.Reviews = new HashSet<Review>();
             this.Authors = new HashSet<Author>();
         }
 
@@ -18,6 +19,7 @@ namespace LibrApp2.Models
         public Genre Genre { get; set; }
         public byte GenreId { get; set; }
 
+        public ICollection<Review> Reviews { get; set; }
         public ICollection<Author> Authors { get; set; }
     }
 }

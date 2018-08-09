@@ -31,12 +31,20 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(book.Name, "Details", new { id = book.Id })
-
+                @Html.ActionLink(book.Name, "Details", new { id = book.Id }, null)
             </td>
 
             <td>
-                @Html.ActionLink("Remove from bookshelf", "RemoveFromBookshelf", new { id = book.Id }, null) |
+                @Html.ActionLink("Remove from bookshelf", "RemoveFromBookshelf", new { id = book.Id }) |
+                @if (!Model.Reviews.Where(b => b.BookId == book.Id).Any())
+                {
+                    @Html.ActionLink("Add Review", "AddReview", "Reviews", new { id = book.Id }, null)
+                }
+                else
+                {
+                    @Html.Label(" Already reviewed |  ")
+                    @Html.ActionLink("Show review", "ShowSingleReview", "Reviews", new { id = book.Id }, null)
+                }
             </td>
         </tr>
 

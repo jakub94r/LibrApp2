@@ -11,7 +11,7 @@ namespace LibrApp2.Models
     {
         public UserProfile()
         {
-            //this.Reviews = new HashSet<Review>();
+            this.Reviews = new HashSet<Review>();
             Books = new HashSet<Book>();
         }
 
@@ -19,7 +19,7 @@ namespace LibrApp2.Models
         public string AspNetUserId { get; set; }
         public string Username { get; set; }
 
-        //public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Book> Books { get; set; }
         public virtual ApplicationUser User { get; set; }
     }

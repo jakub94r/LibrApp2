@@ -1,0 +1,30 @@
+﻿@model LibrApp2.Models.Review
+@{
+    ViewBag.Title = "ShowSingleReview";
+}
+
+<h2>Your review of "@Model.Book.Name"</h2>
+
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rate)
+        </th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.Content)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.Rate)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.BookId }) |
+            @Html.ActionLink("Delete", "Delete", new { userId = Model.UserProfile.AspNetUserId, bookId = Model.BookId })
+        </td>
+    </tr>
