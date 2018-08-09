@@ -8,12 +8,54 @@ using System.Web;
 using System.Web.Mvc;
 using LibrApp2.Models;
 using LibrApp2.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace LibrApp2.Controllers
 {
     public class BooksController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public ActionResult MyBookshelf()
+        {
+
+            var currentUserId = User.Identity.GetUserId();
+            var currentUser = db.UserProfiles.SingleOrDefault(s => s.AspNetUserId == currentUserId);
+
+            if (currentUser == null)
+                return HttpNotFound();
+
+            return View(currentUser);
+        }
+
+        public ActionResult AddToBookshelf(int id)
+        {
+            var currentUserId = User.Identity.GetUserId();
+            var currentUser = db.UserProfiles.SingleOrDefault(s => s.AspNetUserId == currentUserId);
+            var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
+
+            if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) == null)
+            {
+                currentUser.Books.Add(currentBook);
+                db.SaveChanges();
+                return RedirectToAction("MyBookshelf");
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult RemoveFromBookshelf(int id)
+        {
+            var currentUserId = User.Identity.GetUserId();
+            var currentUser = db.UserProfiles.SingleOrDefault(s => s.AspNetUserId == currentUserId);
+            var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
+
+            if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) != null)
+            {
+                currentUser.Books.Remove(currentBook);
+                db.SaveChanges();
+            }
+            return RedirectToAction("MyBookshelf");
+        }
 
         public ActionResult ShowAvailableAuthors(int bookId)
         {

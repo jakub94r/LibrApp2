@@ -1,0 +1,45 @@
+﻿@model LibrApp2.Models.UserProfile
+
+@{
+    ViewBag.Title = "My bookshelf";
+}
+
+<h2>Hello @Model.Username, this is Your bookshelf</h2>
+
+<table class="table">
+    @*<tr>
+            @using (Html.BeginForm())
+            {
+                <p>
+                    Genre: @Html.DropDownList("bookGenre", "All")
+                    Title: @Html.TextBox("SearchString") <br />
+                    <input type="submit" value="Filter" />
+                </p>
+            }
+        </tr>*@
+
+    <tr>
+        <th>
+            <label>Book</label>
+        </th>
+        <th>
+            <label>Actions</label>
+        </th>
+    </tr>
+
+    @foreach (var book in Model.Books)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(book.Name, "Details", new { id = book.Id })
+
+            </td>
+
+            <td>
+                @Html.ActionLink("Remove from bookshelf", "RemoveFromBookshelf", new { id = book.Id }, null) |
+            </td>
+        </tr>
+
+    }
+
+</table>
