@@ -15,6 +15,8 @@ namespace LibrApp2.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -156,7 +158,16 @@ namespace LibrApp2.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
+
+                    db.UserProfiles.Add(new Models.UserProfile
+                    {
+                        AspNetUserId = user.Id,
+                        Username = user.Email.Split('@')[0],
+                    }
+                    );
+
+                    db.SaveChanges();
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -407,6 +418,7 @@ namespace LibrApp2.Controllers
         {
             if (disposing)
             {
+                db.Dispose();
                 if (_userManager != null)
                 {
                     _userManager.Dispose();

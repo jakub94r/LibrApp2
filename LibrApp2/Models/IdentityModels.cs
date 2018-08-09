@@ -33,5 +33,6 @@ namespace LibrApp2.Models
         public System.Data.Entity.DbSet<LibrApp2.Models.Book> Books { get; set; }
         public System.Data.Entity.DbSet<LibrApp2.Models.Genre> Genres { get; set; }
         public System.Data.Entity.DbSet<LibrApp2.Models.Author> Authors { get; set; }
+        public System.Data.Entity.DbSet<LibrApp2.Models.UserProfile> UserProfiles { get; set; }
     }
 }
