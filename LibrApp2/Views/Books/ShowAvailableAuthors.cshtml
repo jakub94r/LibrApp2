@@ -1,0 +1,71 @@
+﻿@model LibrApp2.ViewModels.AuthorToBookViewModel
+
+@{
+    ViewBag.Title = "AddAuthorToBook";
+}
+
+<h2>Manage authors</h2>
+
+<table class="table table-hover table-bordered">
+    This book's current authors
+    <thead>
+        <tr>
+            <th class="col-md-2">
+                @Html.DisplayNameFor(model => model.AlreadyAuthors.First().Id)
+            </th>
+            <th class="col-md-6">
+                @Html.DisplayNameFor(model => model.AlreadyAuthors.First().FullName)
+            </th>
+            <th class="col-md-4"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AlreadyAuthors)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.ActionLink(item.FullName, "Edit", "Authors", new { id = item.Id }, null)
+                </td>
+                <td>
+                    @Html.ActionLink("Remove from the book", "RemoveAuthorFromBook", new { bookId = Model.BookId, authorId = item.Id })
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+<table class="table table-hover table-bordered">
+    Available authors
+    <thead>
+        <tr>
+            <th class="col-md-2">
+                @Html.DisplayNameFor(model => model.AuthorsList.First().Id)
+            </th>
+            <th class="col-md-6">
+                @Html.DisplayNameFor(model => model.AuthorsList.First().FullName)
+            </th>
+            <th class="col-md-4"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AuthorsList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.ActionLink(item.FullName, "Edit", "Authors", new { id = item.Id }, null )
+                </td>
+                <td>
+                    @Html.ActionLink("Add as author", "AddAuthorToBook", new { bookId = Model.BookId, authorId = item.Id })
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

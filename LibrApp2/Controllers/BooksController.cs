@@ -15,10 +15,75 @@ namespace LibrApp2.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public ActionResult ShowAvailableAuthors(int bookId)
+        {
+            Book book = db.Books.Include(b => b.Authors).SingleOrDefault(b => b.Id == bookId);
+            var alreadyAuthors = book.Authors.ToList();
+            var authorsList = db.Authors.ToList().Except(alreadyAuthors).ToList();
+            AuthorToBookViewModel authorToBook = new AuthorToBookViewModel()
+            {
+                AuthorsList = authorsList,
+                AlreadyAuthors = alreadyAuthors,
+                BookId = bookId
+            };
+
+            //add instances to context
+            //db.Books.Attach(book);
+
+            //db.Authors.Attach(author);
+
+            // add instance to navigation property
+            //book.Authors.Add(author);
+
+            //call SaveChanges from context to confirm inserts
+            //db.SaveChanges();
+            return View(authorToBook);
+        }
+
+        public ActionResult AddAuthorToBook(int bookId, int authorId)
+        {
+            Book book = db.Books.SingleOrDefault(b => b.Id == bookId);
+            Author author = db.Authors.SingleOrDefault(a => a.Id == authorId);
+
+            //add instances to context
+            db.Books.Attach(book);
+
+            //db.Authors.Attach(author);
+
+            // add instance to navigation property
+            book.Authors.Add(author);
+
+            //call SaveChanges from context to confirm inserts
+            db.SaveChanges();
+
+            return RedirectToAction("ShowAvailableAuthors", new { bookId = bookId });
+        }
+
+        public ActionResult RemoveAuthorFromBook(int bookId, int authorId)
+        {
+            Book book = db.Books.Include(b => b.Authors).SingleOrDefault(b => b.Id == bookId);
+            Author author = db.Authors.SingleOrDefault(a => a.Id == authorId);
+
+            //add instances to context
+            //db.Books.Attach(book);
+
+            //db.Authors.Attach(author);
+
+            // add instance to navigation property
+            book.Authors.Remove(author);
+
+            //call SaveChanges from context to confirm inserts
+            db.SaveChanges();
+
+            return RedirectToAction("ShowAvailableAuthors", new { bookId = bookId });
+
+            //return RedirectToAction("RemoveAuthorFromBook", new { bookId = bookId, authorId = authorId });
+
+        }
         // GET: Books
         public ActionResult Index()
         {
-            return View(db.Books.Include(b => b.Genre).ToList());
+            return View(db.Books.Include(b => b.Genre).Include(b => b.Authors).ToList());
         }
 
         // GET: Books/Details/5
