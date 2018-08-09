@@ -227,6 +227,14 @@
     <Compile Include="Migrations\201808081539083_AddAuthorModel.Designer.cs">
       <DependentUpon>201808081539083_AddAuthorModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808090904070_PopulateBooks.cs" />
+    <Compile Include="Migrations\201808090904070_PopulateBooks.Designer.cs">
+      <DependentUpon>201808090904070_PopulateBooks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808090904420_PopulateAuthors.cs" />
+    <Compile Include="Migrations\201808090904420_PopulateAuthors.Designer.cs">
+      <DependentUpon>201808090904420_PopulateAuthors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
@@ -346,6 +354,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808081539083_AddAuthorModel.resx">
       <DependentUpon>201808081539083_AddAuthorModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808090904070_PopulateBooks.resx">
+      <DependentUpon>201808090904070_PopulateBooks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808090904420_PopulateAuthors.resx">
+      <DependentUpon>201808090904420_PopulateAuthors.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
