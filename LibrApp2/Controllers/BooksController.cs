@@ -21,7 +21,7 @@ namespace LibrApp2.Controllers
         public ActionResult MyBookshelf()
         {
             var currentUserId = User.Identity.GetUserId();
-            var currentUser = db.UserProfiles.SingleOrDefault(s => s.AspNetUserId == currentUserId);
+            var currentUser = db.UserProfiles.Include(u => u.AspNetUser).SingleOrDefault(s => s.AspNetUserId == currentUserId);
 
             if (currentUser == null)
                 return HttpNotFound();
@@ -34,7 +34,7 @@ namespace LibrApp2.Controllers
         public ActionResult AddToBookshelf(int id)
         {
             var currentUserId = User.Identity.GetUserId();
-            var currentUser = db.UserProfiles.SingleOrDefault(s => s.AspNetUserId == currentUserId);
+            var currentUser = db.UserProfiles.Include(u => u.AspNetUser).SingleOrDefault(s => s.AspNetUserId == currentUserId);
             var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
 
             if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) == null)
@@ -51,7 +51,7 @@ namespace LibrApp2.Controllers
         public ActionResult RemoveFromBookshelf(int id)
         {
             var currentUserId = User.Identity.GetUserId();
-            var currentUser = db.UserProfiles.SingleOrDefault(s => s.AspNetUserId == currentUserId);
+            var currentUser = db.UserProfiles.Include(u => u.AspNetUser).SingleOrDefault(s => s.AspNetUserId == currentUserId);
             var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
 
             if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) != null)

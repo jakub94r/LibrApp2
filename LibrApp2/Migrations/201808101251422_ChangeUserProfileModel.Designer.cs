@@ -7,13 +7,13 @@ namespace LibrApp2.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class SeedUsers : IMigrationMetadata
+    public sealed partial class ChangeUserProfileModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(SeedUsers));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangeUserProfileModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "201808091609436_SeedUsers"; }
+            get { return "201808101251422_ChangeUserProfileModel"; }
         }
         
         string IMigrationMetadata.Source

@@ -16,13 +16,15 @@ namespace LibrApp2.Models
         }
 
         public int Id { get; set; }
-        public string AspNetUserId { get; set; }
+
 
         [Display(Name = "User")]
         public string Username { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Book> Books { get; set; }
-        public virtual ApplicationUser User { get; set; }
+
+        public virtual ApplicationUser AspNetUser { get; set; }
+        public string AspNetUserId { get; set; }
     }
 }
