@@ -10,12 +10,23 @@
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Username)</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th class="col-md-2">Admin actions</th>
+            }
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>@Html.DisplayFor(model => model.Username)</td>
-        </tr>
+            @if (User.IsInRole("Admin"))
+            {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+            </td>
+            }
+            </tr>
     </tbody>
 </table>
 

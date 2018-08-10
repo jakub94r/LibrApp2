@@ -62,6 +62,7 @@ namespace LibrApp2.Controllers
             return RedirectToAction("MyBookshelf");
         }
 
+        [Authorize(Roles = RoleName.Admin)]
         [HttpGet]
         public ActionResult ShowAvailableAuthors(int bookId)
         {
@@ -89,6 +90,7 @@ namespace LibrApp2.Controllers
             return View(authorToBook);
         }
 
+        [Authorize(Roles = RoleName.Admin)]
         [HttpGet]
         public ActionResult AddAuthorToBook(int bookId, int authorId)
         {
@@ -109,6 +111,7 @@ namespace LibrApp2.Controllers
             return RedirectToAction("ShowAvailableAuthors", new { bookId = bookId });
         }
 
+        [Authorize(Roles = RoleName.Admin)]
         [HttpGet]
         public ActionResult RemoveAuthorFromBook(int bookId, int authorId)
         {
@@ -134,7 +137,10 @@ namespace LibrApp2.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            return View(db.Books.Include(b => b.Genre).Include(b => b.Authors).ToList());
+            if (User.IsInRole(RoleName.Admin))
+                return View(db.Books.Include(b => b.Genre).Include(b => b.Authors).ToList());
+
+            return View("IndexReadOnly", db.Books.Include(b => b.Genre).Include(b => b.Authors).ToList());
         }
 
         // GET: Books/Details/5
@@ -167,6 +173,7 @@ namespace LibrApp2.Controllers
         // POST: Books/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,DatePublished,GenreId")] Book book)
@@ -182,6 +189,7 @@ namespace LibrApp2.Controllers
         }
 
         // GET: Books/Edit/5
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -206,6 +214,7 @@ namespace LibrApp2.Controllers
         // POST: Books/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,DatePublished,GenreId")] Book book)
@@ -220,6 +229,7 @@ namespace LibrApp2.Controllers
         }
 
         // GET: Books/Delete/5
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -235,6 +245,7 @@ namespace LibrApp2.Controllers
         }
 
         // POST: Books/Delete/5
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -14,27 +14,6 @@ namespace LibrApp2.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public void InsertWithoutData(int BookId, int AuthorId)
-        {
-            BookId = 16;
-            AuthorId = 1;
-            Book book = db.Books.SingleOrDefault(b => b.Id == BookId);
-            Author author = db.Authors.SingleOrDefault(a => a.Id == AuthorId);
-
-            //add instances to context
-            //db.Books.Add(book);
-            //db.Books.Attach(book);
-
-            //db.Authors.Add(author);
-            //db.Authors.Attach(author);
-
-            // add instance to navigation property
-            book.Authors.Add(author);
-
-            //call SaveChanges from context to confirm inserts
-            db.SaveChanges();
-        }
-
         // GET: Authors
         public ActionResult Index()
         {
@@ -57,6 +36,7 @@ namespace LibrApp2.Controllers
         }
 
         // GET: Authors/Create
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Create()
         {
             return View();
@@ -65,6 +45,7 @@ namespace LibrApp2.Controllers
         // POST: Authors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,FullName")] Author author)
@@ -80,6 +61,7 @@ namespace LibrApp2.Controllers
         }
 
         // GET: Authors/Edit/5
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -97,6 +79,7 @@ namespace LibrApp2.Controllers
         // POST: Authors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,FullName")] Author author)
@@ -111,6 +94,7 @@ namespace LibrApp2.Controllers
         }
 
         // GET: Authors/Delete/5
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -126,6 +110,7 @@ namespace LibrApp2.Controllers
         }
 
         // POST: Authors/Delete/5
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

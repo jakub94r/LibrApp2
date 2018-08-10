@@ -9,7 +9,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Review</h4>
         <hr />
@@ -44,5 +44,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to bookshelf", "MyBookshelf", "Books")
 </div>

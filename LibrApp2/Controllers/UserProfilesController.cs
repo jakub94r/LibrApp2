@@ -15,6 +15,7 @@ namespace LibrApp2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: UserProfiles
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Index()
         {
             return View(db.UserProfiles.ToList());
@@ -36,29 +37,30 @@ namespace LibrApp2.Controllers
         }
 
         // GET: UserProfiles/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
         // POST: UserProfiles/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,AspNetUserId,Username")] UserProfile userProfile)
-        {
-            if (ModelState.IsValid)
-            {
-                db.UserProfiles.Add(userProfile);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "Id,AspNetUserId,Username")] UserProfile userProfile)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.UserProfiles.Add(userProfile);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            return View(userProfile);
-        }
+        //    return View(userProfile);
+        //}
 
         // GET: UserProfiles/Edit/5
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,6 +78,7 @@ namespace LibrApp2.Controllers
         // POST: UserProfiles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,AspNetUserId,Username")] UserProfile userProfile)
@@ -90,6 +93,7 @@ namespace LibrApp2.Controllers
         }
 
         // GET: UserProfiles/Delete/5
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +109,7 @@ namespace LibrApp2.Controllers
         }
 
         // POST: UserProfiles/Delete/5
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -115,15 +120,6 @@ namespace LibrApp2.Controllers
             db.Users.Remove(aspNetUser);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

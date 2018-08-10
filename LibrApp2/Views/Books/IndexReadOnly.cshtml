@@ -1,0 +1,62 @@
+﻿@model IEnumerable<LibrApp2.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of books</h2>
+
+<table id="books" class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayNameFor(model => model.DatePublished)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayNameFor(model => model.Authors)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Name, "Details", new { id = item.Id }, null)
+                </td>
+                <td>
+                    @item.DatePublished.Value.ToShortDateString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre.Name)
+                </td>
+                <td>
+                    @String.Join(", ", item.Authors.Select(a => a.FullName).ToArray())
+                </td>
+                <td>
+                    <p>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </p>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#books").dataTable();
+        });
+    </script>
+    }

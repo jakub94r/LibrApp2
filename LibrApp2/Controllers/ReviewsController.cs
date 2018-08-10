@@ -48,6 +48,7 @@ namespace LibrApp2.Controllers
             return View(review);
         }
 
+        [Authorize]
         public ActionResult AddReview(int? id)
         {
             if (id == null)
@@ -58,6 +59,7 @@ namespace LibrApp2.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult AddReview([Bind(Include = "Id, Content, Rate")] Review review, int? id)
         {
@@ -87,6 +89,7 @@ namespace LibrApp2.Controllers
         }
 
         // GET: Reviews
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Index()
         {
             var reviews = db.Reviews.Include(r => r.Book).Include(r => r.UserProfile);
@@ -94,6 +97,7 @@ namespace LibrApp2.Controllers
         }
 
         // GET: Reviews/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -114,23 +118,31 @@ namespace LibrApp2.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Content,Rate,BookId,UserProfileId")] Review review)
         {
             if (ModelState.IsValid)
             {
+                if (User.IsInRole(RoleName.Admin))
+                {
+                    var userId = this.User.Identity.GetUserId();
+                    String adminProfileUsername = db.UserProfiles.SingleOrDefault(u => u.AspNetUserId == userId).Username;
+                    review.Content = review.Content.Insert(review.Content.Length, "\n[This review was edited by one of administrators (" + adminProfileUsername + ")]");
+                }
                 db.Entry(review).State = EntityState.Modified;
                 db.SaveChanges();
                 CalculateAverageRating(review.BookId, review.Rate);
                 db.SaveChanges();
-                
-                
-                return RedirectToAction("Index");
+
+
+                return RedirectToAction("MyBookshelf", "Books", new { id = review.UserProfileId });
             }
             return View(review);
         }
 
         // GET: Books/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -146,6 +158,7 @@ namespace LibrApp2.Controllers
         }
 
         // POST: Books/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -155,7 +168,7 @@ namespace LibrApp2.Controllers
             db.SaveChanges();
             CalculateAverageRating(review.BookId, review.Rate);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("MyBookshelf", "Books", new { id = review.UserProfileId });
         }
 
         protected override void Dispose(bool disposing)
