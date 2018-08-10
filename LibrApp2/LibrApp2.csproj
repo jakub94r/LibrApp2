@@ -257,6 +257,10 @@
     <Compile Include="Migrations\201808101251422_ChangeUserProfileModel.Designer.cs">
       <DependentUpon>201808101251422_ChangeUserProfileModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808101642363_AddValidationToAuthorBooksAndReviewModels.cs" />
+    <Compile Include="Migrations\201808101642363_AddValidationToAuthorBooksAndReviewModels.Designer.cs">
+      <DependentUpon>201808101642363_AddValidationToAuthorBooksAndReviewModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
@@ -650,6 +654,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808101251422_ChangeUserProfileModel.resx">
       <DependentUpon>201808101251422_ChangeUserProfileModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808101642363_AddValidationToAuthorBooksAndReviewModels.resx">
+      <DependentUpon>201808101642363_AddValidationToAuthorBooksAndReviewModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

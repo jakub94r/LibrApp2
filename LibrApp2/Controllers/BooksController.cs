@@ -37,6 +37,9 @@ namespace LibrApp2.Controllers
             var currentUser = db.UserProfiles.Include(u => u.AspNetUser).SingleOrDefault(s => s.AspNetUserId == currentUserId);
             var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
 
+            if (currentUser == null || currentBook == null)
+                return HttpNotFound();
+
             if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) == null)
             {
                 currentUser.Books.Add(currentBook);
@@ -54,6 +57,9 @@ namespace LibrApp2.Controllers
             var currentUser = db.UserProfiles.Include(u => u.AspNetUser).SingleOrDefault(s => s.AspNetUserId == currentUserId);
             var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
 
+            if (currentUser == null || currentBook == null)
+                return HttpNotFound();
+
             if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) != null)
             {
                 currentUser.Books.Remove(currentBook);
@@ -66,9 +72,14 @@ namespace LibrApp2.Controllers
         [HttpGet]
         public ActionResult ShowAvailableAuthors(int bookId)
         {
+
             Book book = db.Books.Include(b => b.Authors).SingleOrDefault(b => b.Id == bookId);
             var alreadyAuthors = book.Authors.ToList();
             var authorsList = db.Authors.ToList().Except(alreadyAuthors).ToList();
+
+            if (book == null)
+                return HttpNotFound();
+
             AuthorToBookViewModel authorToBook = new AuthorToBookViewModel()
             {
                 AuthorsList = authorsList,
@@ -97,6 +108,9 @@ namespace LibrApp2.Controllers
             Book book = db.Books.SingleOrDefault(b => b.Id == bookId);
             Author author = db.Authors.SingleOrDefault(a => a.Id == authorId);
 
+            if (book == null)
+                return HttpNotFound();
+
             //add instances to context
             db.Books.Attach(book);
 
@@ -118,6 +132,8 @@ namespace LibrApp2.Controllers
             Book book = db.Books.Include(b => b.Authors).SingleOrDefault(b => b.Id == bookId);
             Author author = db.Authors.SingleOrDefault(a => a.Id == authorId);
 
+            if (book == null)
+                return HttpNotFound();
             //add instances to context
             //db.Books.Attach(book);
 

@@ -12,8 +12,10 @@ namespace LibrApp2.Models
 
         [StringLength(255)]
         [Display(Name = "Review")]
+        [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 
+        [Required(ErrorMessage = "Please give the book a grade")]
         [Range(1, 10, ErrorMessage = "Please enter a value between {1} and {2}")]
         public byte Rate { get; set; }
 

@@ -19,6 +19,10 @@ namespace LibrApp2.Controllers
         public void CalculateAverageRating(int bookId, byte rate)
         {
             Book book = db.Books.Include(b => b.Reviews).SingleOrDefault(b => b.Id == bookId);
+
+            if (book == null)
+                throw new HttpException(404, "404 Not Found");
+
             float maxRating = 0;
             foreach (Review review in book.Reviews)
             {
@@ -33,6 +37,9 @@ namespace LibrApp2.Controllers
             var currentBook = db.Books.Include(b => b.Reviews).SingleOrDefault(b => b.Id == id);
             var reviews = currentBook.Reviews.ToList();
 
+            if (currentBook == null || reviews == null)
+                return HttpNotFound();
+
             return View(reviews);
         }
 
@@ -45,6 +52,10 @@ namespace LibrApp2.Controllers
 
             var userId = User.Identity.GetUserId();
             var review = db.Reviews.SingleOrDefault(r => r.BookId == id && r.UserProfile.AspNetUserId == userId);
+
+            if (review == null)
+                return HttpNotFound();
+
             return View(review);
         }
 
@@ -79,7 +90,6 @@ namespace LibrApp2.Controllers
                 {
 
                     db.Reviews.Add(review);
-                    db.SaveChanges();
                     CalculateAverageRating(review.BookId, review.Rate);
                     db.SaveChanges();
                     return RedirectToAction("MyBookshelf", "Books");
@@ -92,8 +102,8 @@ namespace LibrApp2.Controllers
         [Authorize(Roles = RoleName.Admin)]
         public ActionResult Index()
         {
-            var reviews = db.Reviews.Include(r => r.Book).Include(r => r.UserProfile);
-            return View(reviews.ToList());
+            var reviews = db.Reviews.Include(r => r.Book).Include(r => r.UserProfile).ToList();
+            return View(reviews);
         }
 
         // GET: Reviews/Edit/5
@@ -131,7 +141,6 @@ namespace LibrApp2.Controllers
                     review.Content = review.Content.Insert(review.Content.Length, "\n[This review was edited by one of administrators (" + adminProfileUsername + ")]");
                 }
                 db.Entry(review).State = EntityState.Modified;
-                db.SaveChanges();
                 CalculateAverageRating(review.BookId, review.Rate);
                 db.SaveChanges();
 
@@ -165,7 +174,6 @@ namespace LibrApp2.Controllers
         {
             Review review = db.Reviews.Find(id);
             db.Reviews.Remove(review);
-            db.SaveChanges();
             CalculateAverageRating(review.BookId, review.Rate);
             db.SaveChanges();
             return RedirectToAction("MyBookshelf", "Books", new { id = review.UserProfileId });

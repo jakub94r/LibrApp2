@@ -20,10 +20,14 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 680px;
 }
 
 .bookTableHead {
     background-color: blue;
     color: white;
-} 
+}
+
+.myCustomClass {
+    width: 800px !IMPORTANT;
+}

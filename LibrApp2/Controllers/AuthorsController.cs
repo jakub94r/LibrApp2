@@ -17,7 +17,10 @@ namespace LibrApp2.Controllers
         // GET: Authors
         public ActionResult Index()
         {
-            return View(db.Authors.ToList());
+            if (User.IsInRole(RoleName.Admin))
+                return View(db.Authors.ToList());
+
+            return View("IndexReadOnly", db.Authors.ToList());
         }
 
         // GET: Authors/Details/5

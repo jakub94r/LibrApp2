@@ -16,6 +16,8 @@ namespace LibrApp2.Models
         public int Id { get; set; }
 
         [Display(Name = "Name")]
+        [Required(ErrorMessage = "Please enter author's name")]
+        [StringLength(50, ErrorMessage = "Name can have maximum of {1} characters")]
         public String FullName { get; set; }
 
         public ICollection<Book> Books { get; set; }

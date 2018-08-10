@@ -17,6 +17,8 @@ namespace LibrApp2.Models
 
         public int Id { get; set; }
         [Display(Name = "Title")]
+        [Required(ErrorMessage = "Please enter book's title")]
+        [StringLength(255, ErrorMessage = "Title can have maximum of {1} characters")]
         public String Name { get; set; }
 
         [Display(Name = "Date published")]
