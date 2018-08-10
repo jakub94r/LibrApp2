@@ -72,7 +72,8 @@ namespace LibrApp2.Controllers
             {
                 AuthorsList = authorsList,
                 AlreadyAuthors = alreadyAuthors,
-                BookId = bookId
+                BookId = bookId,
+                BookName = book.Name
             };
 
             //add instances to context

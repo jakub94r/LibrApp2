@@ -7,9 +7,9 @@
 <h2>List of authors</h2>
 
 <p>
-    @Html.ActionLink("Add author", "Create", null, new { @class="btn btn-primary btn-sm" } )
+    @Html.ActionLink("Add author", "Create", null, new { @class = "btn btn-primary btn-sm" })
 </p>
-<table class="table table-hover table-bordered">
+<table id="authors" class="table table-hover table-bordered">
     <thead>
         <tr>
             <th>
@@ -36,3 +36,12 @@
     </tbody>
 
 </table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#authors").dataTable();
+        });
+    </script>
+}

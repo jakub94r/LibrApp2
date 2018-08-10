@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table table-hover table-bordered">
+<table id="userProfiles" class="table table-hover table-bordered">
     <thead>
         <tr>
             <th>
@@ -34,3 +34,12 @@
         }
     </tbody>
 </table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#userProfiles").dataTable();
+        });
+    </script>
+}

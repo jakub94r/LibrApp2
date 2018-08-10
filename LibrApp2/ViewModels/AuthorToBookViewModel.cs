@@ -11,5 +11,6 @@ namespace LibrApp2.ViewModels
         public List<Author> AuthorsList { get; set; }
         public List<Author> AlreadyAuthors { get; set; }
         public int BookId { get; set; }
+        public string BookName { get; set; }
     }
 }

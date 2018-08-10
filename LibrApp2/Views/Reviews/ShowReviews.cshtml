@@ -4,51 +4,59 @@
     ViewBag.Title = "Show Reviews";
 }
 
-<h2>ShowReviews</h2>
-
-
-@{
-    if (Model.Any())
+    @if (Model.Any())
     {
-        <table class="table table-hover table-bordered">
+        <h2>Reviewss for @Model.First().Book.Name</h2>
+        <table id="reviews" class="table table-hover table-bordered ">
+            <thead>
 
-            <tr>
-                <th class="col-md-2">
-                    @Html.DisplayNameFor(model => model.Book.Name)
-                </th>
-                <th class="col-md-7">
-                    @Html.DisplayNameFor(model => model.Content)
-                </th>
-                <th class="col-md-1">
-                    @Html.DisplayNameFor(model => model.Rate)
-                </th>
-                <th class="col-md-2">
-                    @Html.DisplayNameFor(model => model.UserProfile.Username)
-                </th>
-            </tr>
 
-            @foreach (var item in Model)
-            {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Book.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Content)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Rate)/10
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserProfile.Username)
-                    </td>
+                    <th class="col-md-2">
+                        @Html.DisplayNameFor(model => model.Book.Name)
+                    </th>
+                    <th class="col-md-7">
+                        @Html.DisplayNameFor(model => model.Content)
+                    </th>
+                    <th class="col-md-1">
+                        @Html.DisplayNameFor(model => model.Rate)
+                    </th>
+                    <th class="col-md-2">
+                        @Html.DisplayNameFor(model => model.UserProfile.Username)
+                    </th>
                 </tr>
-            }
-
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Book.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Content)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rate)/10
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserProfile.Username)
+                        </td>
+                    </tr>
+                }
+            </tbody>
         </table>
     }
     else
     {
-        <p>This book has no reviews.</p>
+        <h3>This book has no reviews.</h3>
     }
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#reviews").dataTable();
+        });
+    </script>
 }

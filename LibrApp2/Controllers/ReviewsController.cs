@@ -25,6 +25,7 @@ namespace LibrApp2.Controllers
                 maxRating += review.Rate;
             }
             book.AverageRating = maxRating / book.Reviews.Count;
+            book.AverageRating = (float)Math.Round(book.AverageRating, 2);
         }
 
         public ActionResult ShowReviews(int id)
