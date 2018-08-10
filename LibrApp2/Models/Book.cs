@@ -10,6 +10,7 @@ namespace LibrApp2.Models
     {
         public Book()
         {
+            AverageRating = 0;
             this.Reviews = new HashSet<Review>();
             this.Authors = new HashSet<Author>();
         }
@@ -20,6 +21,10 @@ namespace LibrApp2.Models
 
         [Display(Name = "Date published")]
         public DateTime? DatePublished { get; set; }
+
+        [Display(Name = "User rating")]
+        public float AverageRating { get; set; }
+
         public Genre Genre { get; set; }
         public byte GenreId { get; set; }
 

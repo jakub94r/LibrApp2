@@ -110,7 +110,9 @@ namespace LibrApp2.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             UserProfile userProfile = db.UserProfiles.Find(id);
+            var aspNetUser = db.Users.SingleOrDefault(u => u.Id == userProfile.AspNetUserId);
             db.UserProfiles.Remove(userProfile);
+            db.Users.Remove(aspNetUser);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

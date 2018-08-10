@@ -7,12 +7,16 @@
 <h3>@Model.Name - details</h3>
 <table class="table table-hover table-bordered">
     <thead>
+    <th class="col-md-1">@Html.DisplayNameFor(model => model.AverageRating)</th>
     <th class="col-md-4">@Html.DisplayNameFor(model => model.Name)</th>
     <th class="col-md-2">@Html.DisplayNameFor(model => model.DatePublished)</th>
     <th class="col-md-2">@Html.DisplayNameFor(model => model.Genre)</th>
-    <th class="col-md-4">@Html.DisplayNameFor(model => model.Authors)</th>
+    <th class="col-md-3">@Html.DisplayNameFor(model => model.Authors)</th>
     </thead>
     <tbody>
+    <td>
+        @Html.DisplayFor(modelItem => Model.AverageRating)/10
+    </td>
     <td>
         @Html.ActionLink(Model.Name, "Edit", new { id = Model.Id }, null)
     </td>
@@ -38,9 +42,11 @@
     <tbody>
         @foreach (var review in Model.Reviews)
         {
-            <td>@review.Rate/10</td>
-            <td>@review.Content</td>
-            <td>@review.UserProfile.Username</td>
+            <tr>
+                <td>@review.Rate/10</td>
+                <td>@review.Content</td>
+                <td>@review.UserProfile.Username</td>
+            </tr>
         }
     </tbody>
 </table>
@@ -56,7 +62,9 @@
     <tbody>
         @foreach (var user in Model.UserProfiles)
         {
-            <td>@Html.ActionLink(user.Username, "Details", "UserProfiles", new { id = user.Id }, null )</td>
+            <tr>
+                <td>@Html.ActionLink(user.Username, "Details", "UserProfiles", new { id = user.Id }, null)</td>
+            </tr>
         }
     </tbody>
 </table>

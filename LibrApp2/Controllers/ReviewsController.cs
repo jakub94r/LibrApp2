@@ -16,6 +16,17 @@ namespace LibrApp2.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public void CalculateAverageRating(int bookId, byte rate)
+        {
+            Book book = db.Books.Include(b => b.Reviews).SingleOrDefault(b => b.Id == bookId);
+            float maxRating = 0;
+            foreach (Review review in book.Reviews)
+            {
+                maxRating += review.Rate;
+            }
+            book.AverageRating = maxRating / book.Reviews.Count;
+        }
+
         public ActionResult ShowReviews(int id)
         {
             var currentBook = db.Books.Include(b => b.Reviews).SingleOrDefault(b => b.Id == id);
@@ -66,6 +77,8 @@ namespace LibrApp2.Controllers
 
                     db.Reviews.Add(review);
                     db.SaveChanges();
+                    CalculateAverageRating(review.BookId, review.Rate);
+                    db.SaveChanges();
                     return RedirectToAction("MyBookshelf", "Books");
                 }
             }
@@ -87,6 +100,7 @@ namespace LibrApp2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Review review = db.Reviews.SingleOrDefault(r => r.Id == id);
+            
 
             if (review == null)
             {
@@ -106,6 +120,10 @@ namespace LibrApp2.Controllers
             {
                 db.Entry(review).State = EntityState.Modified;
                 db.SaveChanges();
+                CalculateAverageRating(review.BookId, review.Rate);
+                db.SaveChanges();
+                
+                
                 return RedirectToAction("Index");
             }
             return View(review);
@@ -133,6 +151,8 @@ namespace LibrApp2.Controllers
         {
             Review review = db.Reviews.Find(id);
             db.Reviews.Remove(review);
+            db.SaveChanges();
+            CalculateAverageRating(review.BookId, review.Rate);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
