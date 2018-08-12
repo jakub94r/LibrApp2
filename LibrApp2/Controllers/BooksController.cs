@@ -29,43 +29,48 @@ namespace LibrApp2.Controllers
             return View(currentUser);
         }
 
+        public void test()
+        {
+
+        }
+
         [Authorize]
         [HttpGet]
-        public ActionResult AddToBookshelf(int id)
+        public void AddToBookshelf(int id)
         {
             var currentUserId = User.Identity.GetUserId();
             var currentUser = db.UserProfiles.Include(u => u.AspNetUser).SingleOrDefault(s => s.AspNetUserId == currentUserId);
             var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
 
-            if (currentUser == null || currentBook == null)
-                return HttpNotFound();
+            if (currentUser == null || currentBook == null) ;
+                //return HttpNotFound();
 
             if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) == null)
             {
                 currentUser.Books.Add(currentBook);
                 db.SaveChanges();
-                return RedirectToAction("MyBookshelf");
+                //return RedirectToAction("MyBookshelf");
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult RemoveFromBookshelf(int id)
+        public void RemoveFromBookshelf(int id)
         {
             var currentUserId = User.Identity.GetUserId();
             var currentUser = db.UserProfiles.Include(u => u.AspNetUser).SingleOrDefault(s => s.AspNetUserId == currentUserId);
             var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
 
-            if (currentUser == null || currentBook == null)
-                return HttpNotFound();
+            //if (currentUser == null || currentBook == null)
+                //return HttpNotFound();
 
             if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) != null)
             {
                 currentUser.Books.Remove(currentBook);
                 db.SaveChanges();
             }
-            return RedirectToAction("MyBookshelf");
+            //return RedirectToAction("MyBookshelf");
         }
 
         [Authorize(Roles = RoleName.Admin)]

@@ -37,7 +37,7 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Remove from bookshelf", "RemoveFromBookshelf", new { id = book.Id }) |
+                    @Html.ActionLink("Remove from bookshelf", "RemoveFromBookshelf", new { id = book.Id }, new { id = "removeButton" }) |
                     @if (!Model.Reviews.Where(b => b.BookId == book.Id).Any())
                     {
                         @Html.ActionLink("Add Review", "AddReview", "Reviews", new { id = book.Id }, null)
@@ -58,6 +58,19 @@
     <script>
         $(document).ready(function () {
             $("#books").dataTable();
+
+            $("#books").on("click", "#removeButton", function (e) {
+                var button = $(this);
+                e.preventDefault();
+                $.ajax({
+
+                    url: $(this).attr("href"), // comma here instead of semicolon
+                    success: function () {
+                        console.log("Success");
+                        button.parents("tr").remove().draw()
+                    }
+                });
+            });
         });
     </script>
 }
