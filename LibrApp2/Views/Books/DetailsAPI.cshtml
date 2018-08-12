@@ -3,6 +3,16 @@
 }
 
 <h3>Details</h3>
+
+@if (User.IsInRole("Admin"))
+{
+    <div id="admin-buttons">
+
+    </div>
+}
+
+
+
 <table id="book-details" class="table table-hover table-bordered">
     <thead class="bg-primary">
         <tr>
@@ -17,6 +27,9 @@
 </table>
 
 <h4>Reviews:</h4>
+<div id="admin-review-buttons">
+
+</div>
 <table id="reviews" class="table table-hover table-bordered">
     <thead class="bg-info">
     <th class="col-md-1">Rate</th>
@@ -25,6 +38,8 @@
     </thead>
     <tbody></tbody>
 </table>
+
+
 
 <h4>Users who have this book on their bookshelf</h4>
 <table id="users" class="table table-hover table-bordered">
@@ -43,12 +58,15 @@
     <script>
         $(document).ready(function () {
 
+            $(function () {
+
+            });
+
             $.ajax({
                 url: "/api/books/" + @ViewBag.LinkableId,
                 type: "Get",
                 success: function (data) {
                     var dateval = $.datepicker.formatDate("M dd yy", new Date(data.DatePublished))
-                    book3 = data;
                     $("<tr><td>" + data.AverageRating + "/10" + "</td><td>" + data.Name + "</td><td>" + dateval + "</td><td>" + data.Genre + "</td><td>" + data.AuthorFullNames.join(', ') + "</td></tr>").appendTo("#book-details");
                     for (var i = 0; i < data.ReviewsDTOs.length; i++) {
                         $("<tr><td>" + data.ReviewsDTOs[i].Rate + "/10" + "</td><td>" + data.ReviewsDTOs[i].Content + "</td><td>" + data.ReviewsDTOs[i].UserProfileUsername + "</td></tr>").appendTo("#reviews");
@@ -56,9 +74,25 @@
                     for (var i = 0; i < data.UserProfileUsernames.length; i++) {
                         $("<tr><td>" + "<a href='/books/edit/" + data.UserProfileIds[i] + "'>" + data.UserProfileUsernames[i] + "</a>" + "</td></tr>").appendTo("#users");
                     }
+
+                    var actionbuttons = $('@Html.ActionLink("Edit book", "edit", new { id = ViewBag.LinkableId }, new { @class = "btn btn-warning btn-sm" }) @Html.ActionLink("Delete book", "delete", new { id = ViewBag.LinkableId }, new { @class = "btn btn-danger btn-sm" })');
+                    $("#admin-buttons").append(actionbuttons);
+                    var location = "/reviews/showreviews/" + data.Id;
+                    var reviewbuttons = $('<button id="js-reviews" data-review-id= ' + data.Id + ' class="js-reviews btn btn-warning btn-sm">Reviews details</button>');
+                    $("#admin-review-buttons").append(reviewbuttons);
+
+
                 }
             });
 
+            $("#admin-review-buttons").on("click", ".js-reviews", function () {
+                var button = $(this);
+
+                console.log("Success");
+                location.href = '/reviews/showreviews/' + button.attr('data-review-id');
+                return false;
+
+            });
             var table = $("#books").DataTable({
                 ajax: {
                     url: "/api/books",

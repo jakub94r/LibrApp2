@@ -24,7 +24,7 @@
     <tbody></tbody>
 </table>
 
-@*@Html.Partial("_deleteModalPopUp")*@
+@Html.Partial("_deleteModalPopUp")
 @section scripts
 {
     <script>
@@ -39,7 +39,7 @@
                     {
                         data: "Name",
                         render: function (data, type, book) {
-                            return "<a href='/books/edit/" + book.Id + "'>" + book.Name + "</a>";
+                            return "<a href='/books/details/" + book.Id + "'>" + book.Name + "</a>";
                         }
                     },
                     {

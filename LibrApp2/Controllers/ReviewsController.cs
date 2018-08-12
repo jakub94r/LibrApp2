@@ -43,6 +43,22 @@ namespace LibrApp2.Controllers
             return View(reviews);
         }
 
+        public ActionResult AdminShowSingleReview(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+           
+            var review = db.Reviews.SingleOrDefault(r => r.Id == id);
+
+            if (review == null)
+                return HttpNotFound();
+
+            return View("ShowSingleReview", review);
+        }
+
         public ActionResult ShowSingleReview(int? id)
         {
             if (id == null)

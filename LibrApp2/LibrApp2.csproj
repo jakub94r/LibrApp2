@@ -657,6 +657,7 @@
     <Content Include="Views\Authors\IndexReadOnly.cshtml" />
     <Content Include="Views\Books\IndexAPI.cshtml" />
     <Content Include="Views\Books\DetailsAPI.cshtml" />
+    <Content Include="Views\Shared\_deleteModalPopUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
