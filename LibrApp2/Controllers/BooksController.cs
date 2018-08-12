@@ -159,6 +159,21 @@ namespace LibrApp2.Controllers
             return View("IndexReadOnly", db.Books.Include(b => b.Genre).Include(b => b.Authors).ToList());
         }
 
+        public ActionResult IndexAPI()
+        {
+            return View();
+        }
+
+        public ActionResult DetailsAPI(int? id)
+        {
+            ViewBag.LinkableId = id;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+            return View();
+        }
         // GET: Books/Details/5
         public ActionResult Details(int? id)
         {

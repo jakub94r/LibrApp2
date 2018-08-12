@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace LibrApp2.Models
 {
+    [Serializable]
+    [DataContract(IsReference = true)]
     public class Author
     {
         public Author()

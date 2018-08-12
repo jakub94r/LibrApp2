@@ -1,0 +1,149 @@
+﻿
+@{
+    ViewBag.Title = "IndexAPI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of Books</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-sm" })
+</p>
+
+<table id="books" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="col-md-3">Name</th>
+            <th class="col-md-2">Genre</th>
+            <th class="col-md-2">Authors</th>
+            <th class="col-md-1">Rate</th>
+            <th class="col-md-2"></th>
+            <th class="col-md-2">Admin options</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@*@Html.Partial("_deleteModalPopUp")*@
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            var table = $("#books").DataTable({
+                ajax: {
+                    url: "/api/books",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Name",
+                        render: function (data, type, book) {
+                            return "<a href='/books/edit/" + book.Id + "'>" + book.Name + "</a>";
+                        }
+                    },
+                    {
+                        data: "Genre"
+                    },
+                    {
+                        data: "AuthorFullNames",
+                        render: function (data, type, book) {
+                            return book.AuthorFullNames.join(', ');
+                        }
+                    },
+                    {
+                        data: "AverageRating",
+                        render: function (data, type, book) {
+                            if (book.AverageRating > 0) { return book.AverageRating } else { return null}
+                        }
+                    },
+                    {
+                        data: "Id",
+                        render: function (data) {
+                            return "<button class='btn-link js-bookshelf' data-book-id=" + data + ">Add to bookshelf</button>" + "<button class='btn-link js-reviews' data-book-id=" + data + ">Show reviews</button>";
+                        }
+                    },
+                    {
+                        data: "Id",
+                        render: function (data) {
+                            return "<button class='btn-link js-edit' data-book-id=" + data + ">Edit</button> | " + "<button class='btn-link js-delete' data-book-id=" + data + ">Delete</button>" + "<br /><button class='btn-link js-manage' data-book-id=" + data + ">Manage authors</button>";
+                        }
+                    }
+                ]
+            });
+
+            $("#books").on("click", ".js-edit", function () {
+                var button = $(this);
+
+                console.log("Success");
+                location.href = '/books/edit/' + button.attr('data-book-id');
+                return;
+            });
+
+            $("#books").on("click", ".js-delete", function () {
+                $("#confirmDelete").modal('show')
+                var button = $(this);
+
+                $("#reset").click(function () {
+                    button = null;
+                    $("#confirmDelete").modal('dispose')
+                });
+
+                $("#confirmDelete").on('click', '.js-ok', function (e) {
+                    if (button == null) {
+                        return;
+                    }
+                    console.log(button.attr("data-book-id"));
+                    $.ajax({
+                        url: "/api/books/" + button.attr("data-book-id"),
+                        method: "DELETE",
+                        success: function () {
+                            table.row(button.parents("tr")).remove().draw();
+                            console.log("Success");
+                            button = null;
+                        }
+                    })
+                    $("#confirmDelete").modal("hide")
+
+                    return;
+                });
+
+            });
+
+            $("#books").on("click", ".js-manage", function () {
+                var button = $(this);
+                $.ajax({
+                    url: "/books/showavailableauthors",
+                    type: "GET",
+                    data: { 'bookId': button.attr("data-book-id")},
+                    success: function () {
+                        window.location.href = url;  
+                        console.log("Success");
+                    }
+                })
+                return false;
+            });
+
+            $("#books").on("click", ".js-bookshelf", function () {
+                var button = $(this);
+                $.ajax({
+                    url: "/books/addtobookshelf",
+                    type: "GET",
+                    data: { 'id': button.attr("data-book-id") },
+                    success: function () {
+                        window.location.href = "/books/MyBookshelf";
+                        console.log("Success");
+                    }
+                })
+                return false;
+            });
+
+            $("#books").on("click", ".js-reviews", function () {
+                var button = $(this);
+
+                location.href = '/reviews/showreviews/' + button.attr('data-book-id');
+                return false;
+            });
+        });
+    </script>
+}

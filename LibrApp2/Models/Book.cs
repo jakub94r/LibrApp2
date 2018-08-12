@@ -33,6 +33,7 @@ namespace LibrApp2.Models
         public ICollection<Review> Reviews { get; set; }
 
         [Display(Name = "Author")]
+        
         public ICollection<Author> Authors { get; set; }
 
         [Display(Name = "Users")]

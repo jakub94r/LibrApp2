@@ -10,6 +10,8 @@ namespace LibrApp2
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/datatables/jquery.datatables.js",
+                "~/Scripts/jquery-ui-1.12.1.js",
+                "~/Scripts/jquery-ui-1.12.1.min.js",
                 "~/Scripts/datatables/datatables.bootstrap.js",
                 "~/Scripts/jquery-{version}.js"));
 

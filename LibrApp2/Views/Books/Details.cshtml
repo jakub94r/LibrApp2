@@ -18,7 +18,7 @@
         @Html.DisplayFor(modelItem => Model.AverageRating)/10
     </td>
     <td>
-        @Html.ActionLink(Model.Name, "Edit", new { id = Model.Id }, null)
+        @Html.DisplayFor(modelItem => Model.Name)
     </td>
     <td>
         @Model.DatePublished.Value.ToShortDateString()

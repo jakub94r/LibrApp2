@@ -1,0 +1,205 @@
+﻿@{
+    ViewBag.Title = "Details";
+}
+
+<h3>Details</h3>
+<table id="book-details" class="table table-hover table-bordered">
+    <thead class="bg-primary">
+        <tr>
+            <th class="col-md-1">Rate</th>
+            <th class="col-md-4">Name</th>
+            <th class="col-md-2">DatePublished</th>
+            <th class="col-md-2">Genre</th>
+            <th class="col-md-3">Authors</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<h4>Reviews:</h4>
+<table id="reviews" class="table table-hover table-bordered">
+    <thead class="bg-info">
+    <th class="col-md-1">Rate</th>
+    <th class="col-md-9">Content</th>
+    <th class="col-md-1">User</th>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<h4>Users who have this book on their bookshelf</h4>
+<table id="users" class="table table-hover table-bordered">
+    <thead class="bg-info">
+        <tr>
+            <th>User</th>
+        </tr>
+    </thead>
+
+    <tbody></tbody>
+</table>
+@*@Html.Partial("_deleteModalPopUp")*@
+@section scripts
+{
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $.ajax({
+                url: "/api/books/" + @ViewBag.LinkableId,
+                type: "Get",
+                success: function (data) {
+                    var dateval = $.datepicker.formatDate("M dd yy", new Date(data.DatePublished))
+                    book3 = data;
+                    $("<tr><td>" + data.AverageRating + "/10" + "</td><td>" + data.Name + "</td><td>" + dateval + "</td><td>" + data.Genre + "</td><td>" + data.AuthorFullNames.join(', ') + "</td></tr>").appendTo("#book-details");
+                    for (var i = 0; i < data.ReviewsDTOs.length; i++) {
+                        $("<tr><td>" + data.ReviewsDTOs[i].Rate + "/10" + "</td><td>" + data.ReviewsDTOs[i].Content + "</td><td>" + data.ReviewsDTOs[i].UserProfileUsername + "</td></tr>").appendTo("#reviews");
+                    }
+                    for (var i = 0; i < data.UserProfileUsernames.length; i++) {
+                        $("<tr><td>" + "<a href='/books/edit/" + data.UserProfileIds[i] + "'>" + data.UserProfileUsernames[i] + "</a>" + "</td></tr>").appendTo("#users");
+                    }
+                }
+            });
+
+            var table = $("#books").DataTable({
+                ajax: {
+                    url: "/api/books",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Name",
+                        render: function (data, type, book) {
+                            return "<a href='/books/edit/" + book.Id + "'>" + book.Name + "</a>";
+                        }
+                    },
+                    {
+                        data: "AverageRating",
+                        render: function (data, type, book) {
+                            if (book.AverageRating > 0) { return book.AverageRating } else { return null }
+                        }
+                    }
+                ]
+            });
+
+            $("#books").on("click", ".js-edit", function () {
+                var button = $(this);
+
+                console.log("Success");
+                location.href = '/books/edit/' + button.attr('data-book-id');
+                return;
+            });
+
+            $("#books").on("click", ".js-delete", function () {
+                $("#confirmDelete").modal('show')
+                var button = $(this);
+
+                $("#reset").click(function () {
+                    button = null;
+                    $("#confirmDelete").modal('dispose')
+                });
+
+                $("#confirmDelete").on('click', '.js-ok', function (e) {
+                    if (button == null) {
+                        return;
+                    }
+                    console.log(button.attr("data-book-id"));
+                    $.ajax({
+                        url: "/api/books/" + button.attr("data-book-id"),
+                        method: "DELETE",
+                        success: function () {
+                            table.row(button.parents("tr")).remove().draw();
+                            console.log("Success");
+                            button = null;
+                        }
+                    })
+                    $("#confirmDelete").modal("hide")
+
+                    return;
+                });
+
+            });
+
+            $("#books").on("click", ".js-manage", function () {
+                var button = $(this);
+                $.ajax({
+                    url: "/books/showavailableauthors",
+                    type: "GET",
+                    data: { 'bookId': button.attr("data-book-id") },
+                    success: function () {
+                        window.location.href = url;
+                        console.log("Success");
+                    }
+                })
+                return false;
+            });
+
+            $("#books").on("click", ".js-bookshelf", function () {
+                var button = $(this);
+                $.ajax({
+                    url: "/books/addtobookshelf",
+                    type: "GET",
+                    data: { 'id': button.attr("data-book-id") },
+                    success: function () {
+                        window.location.href = "/books/MyBookshelf";
+                        console.log("Success");
+                    }
+                })
+                return false;
+            });
+
+            $("#books").on("click", ".js-reviews", function () {
+                var button = $(this);
+
+                location.href = '/reviews/showreviews/' + button.attr('data-book-id');
+                return false;
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+@*<h4>Reviews for @Model.Name:</h4>
+    <table id="reviews" class="table table-hover table-bordered">
+        <thead class="bg-info">
+        <th class="col-md-1">@Html.DisplayNameFor(model => model.Reviews.First().Rate)</th>
+        <th class="col-md-9">@Html.DisplayNameFor(model => model.Reviews.First().Content)</th>
+        <th class="col-md-2">@Html.DisplayNameFor(model => model.Reviews.First().UserProfile.Username)</th>
+        </thead>
+        <tbody>
+            @foreach (var review in Model.Reviews)
+            {
+                <tr>
+                    <td>@review.Rate/10</td>
+                    <td>@review.Content</td>
+                    <td>@review.UserProfile.Username</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4>Users who have this book on their bookshelf</h4>
+    <table id="users" class="table table-hover table-bordered">
+        <thead class="bg-info">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.UserProfiles)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var user in Model.UserProfiles)
+            {
+                <tr>
+                    <td>@Html.ActionLink(user.Username, "Details", "UserProfiles", new { id = user.Id }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+*@

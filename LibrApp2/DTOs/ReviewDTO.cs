@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Web;
 
-namespace LibrApp2.Models
+namespace LibrApp2.DTOs
 {
-    [Serializable]
-    [DataContract(IsReference = true)]
-    public class Review
+    public class ReviewDTO
     {
         public int Id { get; set; }
 
         [StringLength(255)]
-        [Display(Name = "Review")]
-        [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 
         [Required(ErrorMessage = "Please give the book a grade")]
@@ -25,7 +20,7 @@ namespace LibrApp2.Models
         public int BookId { get; set; }
         public int UserProfileId { get; set; }
 
-        public virtual Book Book { get; set; }
-        public virtual UserProfile UserProfile { get; set; }
+        public virtual String BookName { get; set; }
+        public virtual String UserProfileUsername { get; set; }
     }
 }
