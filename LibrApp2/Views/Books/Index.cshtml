@@ -76,19 +76,6 @@
         $(document).ready(function () {
             $("#books").dataTable();
 
-            $("#books").on("click", ".addButton", function (e) {
-                e.preventDefault();
-                $.ajax({
-
-                    url: $(this).attr("href"), // comma here instead of semicolon
-                    success: function () {
-                        console.log("Success")
-                        alert("Value Added");  // or any other indication if you want to show
-                    }
-
-                });
-            });
-
             $("#books").on("click", "#addButton", function (e) {
                 var button = $(this);
                 e.preventDefault();
@@ -96,16 +83,30 @@
 
                     url: $(this).attr("href"), // comma here instead of semicolon
                     success: function () {
-                        console.log("Success");
-                        
-                        alert("Value Added");  // or any other indication if you want to show
-                        button.remove().draw()
+                        var n = noty({
+                            text: 'Book was added to your bookshelf',
+                            layout: 'topRight',
+                            theme: 'relax',
+                            type: 'smallSuccess',
+                            animation: {
+                                open: 'animated bounceInRight',  // Animate.css class names
+                                close: 'animated zoomOutRight' // Animate.css class names
+                            },
+                            timeout: 2000
+                        });
                     },
                     error: function () {
-                        console.log("Error");
-                        
-                        alert("ERROR");  // or any other indication if you want to show
-                        button.remove().draw()
+                        var n = noty({
+                            text: 'You already have this book in your bookshelf',
+                            layout: 'topRight',
+                            theme: 'relax',
+                            type: 'warning',
+                            animation: {
+                                open: 'animated bounceInRight',  // Animate.css class names
+                                close: 'animated zoomOutRight' // Animate.css class names
+                            },
+                            timeout: 2200
+                        });
                     }
                 });
             });

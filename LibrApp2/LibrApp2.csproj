@@ -291,6 +291,7 @@
     <Compile Include="ViewModels\BookViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -594,6 +595,22 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\noty\jquery.noty.js" />
+    <Content Include="Scripts\noty\layouts\bottom.js" />
+    <Content Include="Scripts\noty\layouts\bottomCenter.js" />
+    <Content Include="Scripts\noty\layouts\bottomLeft.js" />
+    <Content Include="Scripts\noty\layouts\bottomRight.js" />
+    <Content Include="Scripts\noty\layouts\center.js" />
+    <Content Include="Scripts\noty\layouts\centerLeft.js" />
+    <Content Include="Scripts\noty\layouts\centerRight.js" />
+    <Content Include="Scripts\noty\layouts\inline.js" />
+    <Content Include="Scripts\noty\layouts\top.js" />
+    <Content Include="Scripts\noty\layouts\topCenter.js" />
+    <Content Include="Scripts\noty\layouts\topLeft.js" />
+    <Content Include="Scripts\noty\layouts\topRight.js" />
+    <Content Include="Scripts\noty\themes\bootstrap.js" />
+    <Content Include="Scripts\noty\themes\default.js" />
+    <Content Include="Scripts\noty\themes\relax.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -658,6 +675,7 @@
     <Content Include="Views\Books\IndexAPI.cshtml" />
     <Content Include="Views\Books\DetailsAPI.cshtml" />
     <Content Include="Views\Shared\_deleteModalPopUp.cshtml" />
+    <Content Include="Views\Books\IndexAPIReadOnly.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

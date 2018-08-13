@@ -160,7 +160,7 @@ namespace LibrApp2.Controllers
 
         }
         // GET: Books
-        public ActionResult Index()
+        public ActionResult IndexStandard()
         {
             if (User.IsInRole(RoleName.Admin))
                 return View(db.Books.Include(b => b.Genre).Include(b => b.Authors).ToList());
@@ -168,10 +168,12 @@ namespace LibrApp2.Controllers
             return View("IndexReadOnly", db.Books.Include(b => b.Genre).Include(b => b.Authors).ToList());
         }
 
-        public ActionResult IndexAPI()
+        public ActionResult Index()
         {
+            if (User.IsInRole(RoleName.Admin))
+                return View("IndexAPI");
 
-            return View();
+            return View("IndexAPIReadOnly");
         }
 
         public ActionResult DetailsAPI(int? id)

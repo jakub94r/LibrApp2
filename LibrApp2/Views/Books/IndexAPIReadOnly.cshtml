@@ -18,7 +18,6 @@
             <th class="col-md-2">Authors</th>
             <th class="col-md-1">Rate</th>
             <th class="col-md-2"></th>
-            <th class="col-md-2">Admin options</th>
         </tr>
     </thead>
     <tbody></tbody>
@@ -70,66 +69,8 @@
 
                             }
                         }
-                    },
-                    {
-                        data: "Id",
-                        render: function (data) {
-                            return "<button class='btn-link js-edit' data-book-id=" + data + ">Edit</button> | " + "<button class='btn-link js-delete' data-book-id=" + data + ">Delete</button>" + "<br /><button class='btn-link js-manage' data-book-id=" + data + ">Manage authors</button>";
-                        }
                     }
                 ]
-            });
-
-            $("#books").on("click", ".js-edit", function () {
-                var button = $(this);
-
-                console.log("Success");
-                location.href = '/books/edit/' + button.attr('data-book-id');
-                return;
-            });
-
-            $("#books").on("click", ".js-delete", function () {
-                $("#confirmDelete").modal('show')
-                var button = $(this);
-
-                $("#reset").click(function () {
-                    button = null;
-                    $("#confirmDelete").modal('dispose')
-                });
-
-                $("#confirmDelete").on('click', '.js-ok', function (e) {
-                    if (button == null) {
-                        return;
-                    }
-                    console.log(button.attr("data-book-id"));
-                    $.ajax({
-                        url: "/api/books/" + button.attr("data-book-id"),
-                        method: "DELETE",
-                        success: function () {
-                            table.row(button.parents("tr")).remove().draw();
-                            console.log("Success");
-                            button = null;
-                        }
-                    })
-                    $("#confirmDelete").modal("hide")
-
-                    return;
-                });
-
-            });
-
-            $("#books").on("click", ".js-manage", function () {
-                var button = $(this);
-                $.ajax({
-                    url: "/books/showavailableauthors",
-                    type: "GET",
-                    data: { 'bookId': button.attr("data-book-id") },
-                    success: function () {
-                        window.location.href = url;
-                        console.log("Success");
-                    }
-                })
-                return false;
             });
 
             $("#books").on("click", ".js-reviews", function () {
@@ -138,7 +79,6 @@
                 location.href = '/reviews/showreviews/' + button.attr('data-book-id');
                 return false;
             });
-
 
             $("#books").on("click", "#addButton", function (e) {
                 var button = $(this);
