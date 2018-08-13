@@ -7,7 +7,7 @@
 <h3>Manage authors of @Model.BookName</h3>
 
 <h4>Current authors</h4>
-<table class="table table-hover table-bordered">
+<table id="currentAuthors" class="table table-hover table-bordered">
     <thead>
         <tr>
             <th class="col-md-2">
@@ -30,7 +30,7 @@
                     @Html.ActionLink(item.FullName, "Edit", "Authors", new { id = item.Id }, null)
                 </td>
                 <td>
-                    @Html.ActionLink("Remove from the book", "RemoveAuthorFromBook", new { bookId = Model.BookId, authorId = item.Id })
+                    @Html.ActionLink("Remove from the book", "RemoveAuthorFromBook", new { bookId = Model.BookId, authorId = item.Id }, new { id = "removeButton" })
                 </td>
             </tr>
 
@@ -63,7 +63,7 @@
                     @Html.ActionLink(item.FullName, "Edit", "Authors", new { id = item.Id }, null)
                 </td>
                 <td>
-                    @Html.ActionLink("Add as author", "AddAuthorToBook", new { bookId = Model.BookId, authorId = item.Id })
+                    @Html.ActionLink("Add as author", "AddAuthorToBook", new { bookId = Model.BookId, authorId = item.Id }, new { id = "addButton" })
                 </td>
             </tr>
 
@@ -76,6 +76,36 @@
     <script>
         $(document).ready(function () {
             $("#availableAuthors").dataTable();
+
+
+            var global = function () {
+            var currentTable = $("#currentAuthors").on("click", "#removeButton", function (e) {
+                var button = $(this);
+                e.preventDefault();
+                $.ajax({
+
+                    url: $(this).attr("href"), // comma here instead of semicolon
+                    success: function () {
+                        console.log("Success");
+                        button.parents("tr").remove().draw()
+
+                    }
+                });
+            });
+
+            var availableTable = $("#availableAuthors").on("click", "#addButton", function (e) {
+                var button = $(this);
+                e.preventDefault();
+                $.ajax({
+
+                    url: $(this).attr("href"), // comma here instead of semicolon
+                    success: function () {
+                        console.log("Success");
+                        button.parents("tr").remove().draw()
+                    }
+                });
+                });
+            }
         });
     </script>
 }

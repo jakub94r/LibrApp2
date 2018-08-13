@@ -41,8 +41,13 @@
     </tbody>
 </table>
 
+@Html.ActionLink("Show me detailed reviews", "showreviews", "Reviews", new { id = Model.Id }, new { @class = "btn btn-primary btn" })
 
-<h4>Reviews for @Model.Name:</h4>
+<div>
+    <h4>Reviews for @Model.Name:</h4>
+
+</div>
+
 <table id="reviews" class="table table-hover table-bordered">
     <thead class="bg-info">
     <th class="col-md-1">@Html.DisplayNameFor(model => model.Reviews.First().Rate)</th>
@@ -52,25 +57,25 @@
     {
         <th class="col-md-2">Admin options</th>
     }
-        </thead>
-        <tbody>
-            @foreach (var review in Model.Reviews)
-            {
-                <tr>
-                    <td>@review.Rate/10</td>
-                    <td>@review.Content</td>
-                    <td>@review.UserProfile.Username</td>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = review.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = review.Id })
-                        </td>
-                    }
-                </tr>
-            }
-        </tbody>
-    </table>
+    </thead>
+    <tbody>
+        @foreach (var review in Model.Reviews)
+        {
+            <tr>
+                <td>@review.Rate/10</td>
+                <td>@review.Content</td>
+                <td>@review.UserProfile.Username</td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = review.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = review.Id })
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
 
 <h4>Users who have this book on their bookshelf</h4>
 <table id="users" class="table table-hover table-bordered">

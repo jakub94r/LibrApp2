@@ -16,8 +16,8 @@
 <table id="book-details" class="table table-hover table-bordered">
     <thead class="bg-primary">
         <tr>
-            <th class="col-md-1">Rate</th>
-            <th class="col-md-4">Name</th>
+            <th class="col-md-1">User Rating</th>
+            <th class="col-md-4">Title</th>
             <th class="col-md-2">DatePublished</th>
             <th class="col-md-2">Genre</th>
             <th class="col-md-3">Authors</th>
@@ -25,11 +25,11 @@
     </thead>
     <tbody></tbody>
 </table>
-
-<h4>Reviews:</h4>
-<div id="admin-review-buttons">
+<div id="review-buttons">
 
 </div>
+
+<h4>Reviews:</h4>
 <table id="reviews" class="table table-hover table-bordered">
     <thead class="bg-info">
     <th class="col-md-1">Rate</th>
@@ -78,8 +78,8 @@
                     var actionbuttons = $('@Html.ActionLink("Edit book", "edit", new { id = ViewBag.LinkableId }, new { @class = "btn btn-warning btn-sm" }) @Html.ActionLink("Delete book", "delete", new { id = ViewBag.LinkableId }, new { @class = "btn btn-danger btn-sm" })');
                     $("#admin-buttons").append(actionbuttons);
                     var location = "/reviews/showreviews/" + data.Id;
-                    var reviewbuttons = $('<button id="js-reviews" data-review-id= ' + data.Id + ' class="js-reviews btn btn-warning btn-sm">Reviews details</button>');
-                    $("#admin-review-buttons").append(reviewbuttons);
+                    var reviewbuttons = $('<button id="js-reviews" data-review-id= ' + data.Id + ' class="js-reviews btn btn-primary btn">Show me detailed reviews</button>');
+                    $("#review-buttons").append(reviewbuttons);
 
 
                 }

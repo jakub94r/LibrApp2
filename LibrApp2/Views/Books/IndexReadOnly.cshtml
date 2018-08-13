@@ -9,16 +9,16 @@
 <table id="books" class="table table-hover table-bordered">
     <thead>
         <tr>
-            <th class="col-md-5">
+            <th class="col-md-3">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th class="col-md-2">
                 @Html.DisplayNameFor(model => model.Genre)
             </th>
-            <th class="col-md-3">
+            <th class="col-md-2">
                 @Html.DisplayNameFor(model => model.Authors)
             </th>
-            <th>
+            <th class="col-md-1">
                 Rate
             </th>
             <th class="col-md-2"></th>
@@ -27,42 +27,75 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-
-
-            <td>
-                @Html.ActionLink(item.Name, "Details", new { id = item.Id }, null)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre.Name)
-            </td>
-            <td>
-                @String.Join(", ", item.Authors.Select(a => a.FullName).ToArray())
-            </td>
-            @if (item.AverageRating != 0)
-            {
+            <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AverageRating)
+                    @Html.ActionLink(item.Name, "Details", new { id = item.Id }, null)
                 </td>
-            }
-            else
-            {
-                <td></td>}
-            <td>
-                <p>@Html.ActionLink("Add to bookshelf", "AddToBookshelf", new { id = item.Id })</p>
-                <p>@Html.ActionLink("Show reviews", "ShowReviews", "Reviews", new { id = item.Id }, null)</p>
-            </td>
-        </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre.Name)
+                </td>
+                <td>
+                    @String.Join(", ", item.Authors.Select(a => a.FullName).ToArray())
+                </td>
+                @if (item.AverageRating != 0)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AverageRating)
+                    </td>
+                }
+                else
+                {
+                    <td></td>}
+                <td>
+                    <p>@Html.ActionLink("Add to bookshelf", "AddToBookshelf", new { id = item.Id }, new { id = "addButton" })</p>
+                    <p>@Html.ActionLink("Show reviews", "ShowReviews", "Reviews", new { id = item.Id }, null)</p>
+                </td>
+            </tr>
 
         }
     </tbody>
 </table>
+
 
 @section scripts
 {
     <script>
         $(document).ready(function () {
             $("#books").dataTable();
+
+            $("#books").on("click", ".addButton", function (e) {
+                e.preventDefault();
+                $.ajax({
+
+                    url: $(this).attr("href"), // comma here instead of semicolon
+                    success: function () {
+                        console.log("Success")
+                        alert("Value Added");  // or any other indication if you want to show
+                    }
+
+                });
+            });
+
+            $("#books").on("click", "#addButton", function (e) {
+                var button = $(this);
+                e.preventDefault();
+                $.ajax({
+
+                    url: $(this).attr("href"), // comma here instead of semicolon
+                    success: function () {
+                        console.log("Success");
+
+                        alert("Value Added");  // or any other indication if you want to show
+                        button.remove().draw()
+                    },
+                    error: function () {
+                        console.log("Error");
+
+                        alert("ERROR");  // or any other indication if you want to show
+                        button.remove().draw()
+                    }
+                });
+            });
         });
     </script>
-    }
+}

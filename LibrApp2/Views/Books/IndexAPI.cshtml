@@ -13,7 +13,7 @@
 <table id="books" class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th class="col-md-3">Name</th>
+            <th class="col-md-3">Title</th>
             <th class="col-md-2">Genre</th>
             <th class="col-md-2">Authors</th>
             <th class="col-md-1">Rate</th>
@@ -54,13 +54,16 @@
                     {
                         data: "AverageRating",
                         render: function (data, type, book) {
-                            if (book.AverageRating > 0) { return book.AverageRating } else { return null}
+                            if (book.AverageRating > 0) { return book.AverageRating } else { return null }
                         }
                     },
                     {
                         data: "Id",
                         render: function (data) {
-                            return "<button class='btn-link js-bookshelf' data-book-id=" + data + ">Add to bookshelf</button>" + "<button class='btn-link js-reviews' data-book-id=" + data + ">Show reviews</button>";
+                            if (true) {
+                                return "<button id='addButton' class='btn-link js-bookshelf' data-book-id=" + data + ">Add to bookshelf</button>" + "<button class='btn-link js-reviews' data-book-id=" + data + ">Show reviews</button>";
+
+                            }
                         }
                     },
                     {
@@ -115,28 +118,28 @@
                 $.ajax({
                     url: "/books/showavailableauthors",
                     type: "GET",
-                    data: { 'bookId': button.attr("data-book-id")},
+                    data: { 'bookId': button.attr("data-book-id") },
                     success: function () {
-                        window.location.href = url;  
+                        window.location.href = url;
                         console.log("Success");
                     }
                 })
                 return false;
             });
 
-            $("#books").on("click", ".js-bookshelf", function () {
-                var button = $(this);
-                $.ajax({
-                    url: "/books/addtobookshelf",
-                    type: "GET",
-                    data: { 'id': button.attr("data-book-id") },
-                    success: function () {
-                        window.location.href = "/books/MyBookshelf";
-                        console.log("Success");
-                    }
-                })
-                return false;
-            });
+            //$("#books").on("click", ".js-bookshelf", function () {
+            //    var button = $(this);
+            //    $.ajax({
+            //        url: "/books/addtobookshelf",
+            //        type: "GET",
+            //        data: { 'id': button.attr("data-book-id") },
+            //        success: function () {
+            //            window.location.href = "/books/MyBookshelf";
+            //            console.log("Success");
+            //        }
+            //    })
+            //    return false;
+            //});
 
             $("#books").on("click", ".js-reviews", function () {
                 var button = $(this);
@@ -144,6 +147,27 @@
                 location.href = '/reviews/showreviews/' + button.attr('data-book-id');
                 return false;
             });
+
+
+            $("#books").on("click", "#addButton", function (e) {
+                var button = $(this);
+                e.preventDefault();
+                $.ajax({
+
+                    url: $(this).attr("href"), // comma here instead of semicolon
+                    success: function () {
+                        console.log("Success");
+
+                        alert("Value Added");  // or any other indication if you want to show
+                        button.remove().draw()
+                    },
+                    error: function () {
+                        console.log("Error");
+
+                        alert("ERROR");  // or any other indication if you want to show
+                        button.remove().draw()
+                    }
+                });
         });
     </script>
 }

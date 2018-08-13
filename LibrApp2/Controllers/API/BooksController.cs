@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using LibrApp2.Models;
 using LibrApp2.DTOs;
+using System.Web.Mvc;
 
 namespace LibrApp2.Controllers.API
 {
@@ -31,6 +32,7 @@ namespace LibrApp2.Controllers.API
             //                  UserProfileId = r.UserProfile.Id,
             //                  UserProfileUsername = r.UserProfile.Username
             //              };
+
             var books = from b in db.Books
                         select new BookDTO()
                         {

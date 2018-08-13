@@ -29,48 +29,52 @@ namespace LibrApp2.Controllers
             return View(currentUser);
         }
 
-        public void test()
-        {
-
-        }
-
         [Authorize]
         [HttpGet]
-        public void AddToBookshelf(int id)
+        public ActionResult AddToBookshelf(int id)
         {
             var currentUserId = User.Identity.GetUserId();
             var currentUser = db.UserProfiles.Include(u => u.AspNetUser).SingleOrDefault(s => s.AspNetUserId == currentUserId);
             var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
 
-            if (currentUser == null || currentBook == null) ;
-                //return HttpNotFound();
+            if (currentUser == null || currentBook == null)
+                return HttpNotFound();
 
-            if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) == null)
+            if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) != null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
             {
                 currentUser.Books.Add(currentBook);
                 db.SaveChanges();
                 //return RedirectToAction("MyBookshelf");
             }
-            //return RedirectToAction("Index");
+
+            return null;
         }
 
         [Authorize]
         [HttpGet]
-        public void RemoveFromBookshelf(int id)
+        public ActionResult RemoveFromBookshelf(int id)
         {
             var currentUserId = User.Identity.GetUserId();
             var currentUser = db.UserProfiles.Include(u => u.AspNetUser).SingleOrDefault(s => s.AspNetUserId == currentUserId);
             var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
 
-            //if (currentUser == null || currentBook == null)
-                //return HttpNotFound();
+            if (currentUser == null || currentBook == null)
+                return HttpNotFound();
 
-            if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) != null)
+            if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
             {
                 currentUser.Books.Remove(currentBook);
                 db.SaveChanges();
             }
-            //return RedirectToAction("MyBookshelf");
+            return null;
         }
 
         [Authorize(Roles = RoleName.Admin)]
@@ -166,6 +170,7 @@ namespace LibrApp2.Controllers
 
         public ActionResult IndexAPI()
         {
+
             return View();
         }
 
