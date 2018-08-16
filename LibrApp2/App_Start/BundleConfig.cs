@@ -31,7 +31,7 @@ namespace LibrApp2
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/theme-bootstrap.css",
+                      "~/Content/libra-bootstrap.css",
                       "~/Content/animate.css",
                       "~/Content/datatables/css/datatables.bootstrap.css",
                       "~/Content/site.css"));

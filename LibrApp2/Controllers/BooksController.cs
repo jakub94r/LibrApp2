@@ -34,11 +34,12 @@ namespace LibrApp2.Controllers
         public ActionResult AddToBookshelf(int id)
         {
             var currentUserId = User.Identity.GetUserId();
+
             var currentUser = db.UserProfiles.Include(u => u.AspNetUser).SingleOrDefault(s => s.AspNetUserId == currentUserId);
             var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
 
-            if (currentUser == null || currentBook == null)
-                return HttpNotFound();
+            if (currentUser == null || currentBook == null || currentUserId == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) != null)
             {

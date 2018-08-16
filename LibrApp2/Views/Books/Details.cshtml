@@ -10,6 +10,7 @@
 {
     <div id="admin-buttons">
         @Html.ActionLink("Edit book", "edit", new { id = Model.Id }, new { @class = "btn btn-warning btn-sm" })
+        @Html.ActionLink("Manage authors", "showavailableauthors", new { bookId = Model.Id }, new { @class = "btn btn-warning btn-sm" })
         @Html.ActionLink("Delete book", "delete", new { id = Model.Id }, new { @class = "btn btn-danger btn-sm" })
     </div>
 }
@@ -41,7 +42,7 @@
     </tbody>
 </table>
 
-@Html.ActionLink("Show me detailed reviews", "showreviews", "Reviews", new { id = Model.Id }, new { @class = "btn btn-default" })
+@Html.ActionLink("Show me detailed reviews", "showreviews", "Reviews", new { id = Model.Id }, new { @class = "btn btn-primary" })
 
 <div>
     <h4>Reviews for @Model.Name:</h4>

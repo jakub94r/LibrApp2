@@ -75,14 +75,14 @@
                         $("<tr><td>" + "<a href='/books/edit/" + data.UserProfileIds[i] + "'>" + data.UserProfileUsernames[i] + "</a>" + "</td></tr>").appendTo("#users");
                     }
 
-                    var actionbuttons = $('@Html.ActionLink("Edit book", "edit", new { id = ViewBag.LinkableId }, new { @class = "btn btn-warning btn-sm" }) @Html.ActionLink("Delete book", "delete", new { id = ViewBag.LinkableId }, new { @class = "btn btn-danger btn-sm" })');
+                    var actionbuttons = $('@Html.ActionLink("Edit book", "edit", new { id = ViewBag.LinkableId }, new { @class = "btn btn-warning btn-sm" }) @Html.ActionLink("Manage authors", "showavailableauthors", new { bookId = ViewBag.LinkableId }, new { @class = "btn btn-warning btn-sm" }) @Html.ActionLink("Delete book", "delete", new { id = ViewBag.LinkableId }, new { @class = "btn btn-danger btn-sm" })');
                     $("#admin-buttons").append(actionbuttons);
-                    var location = "/reviews/showreviews/" + data.Id;
-                    var reviewbuttons = $('<button id="js-reviews" data-review-id= ' + data.Id + ' class="js-reviews btn btn-primary btn">Show me detailed reviews</button>');
+                            var location = "/reviews/showreviews/" + data.Id;
+                            var reviewbuttons = $('<button id="js-reviews" data-review-id= ' + data.Id + ' class="js-reviews btn btn-primary btn">Show me detailed reviews</button>');
                     $("#review-buttons").append(reviewbuttons);
 
 
-                }
+                        }
             });
 
             $("#admin-review-buttons").on("click", ".js-reviews", function () {

@@ -453,6 +453,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\libra-bootstrap.css" />
     <Content Include="Content\theme-bootstrap.css" />
     <Content Include="Content\sandstone-bootstrap.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -681,6 +682,8 @@
     <Content Include="Views\Books\DetailsAPI.cshtml" />
     <Content Include="Views\Shared\_deleteModalPopUp.cshtml" />
     <Content Include="Views\Books\IndexAPIReadOnly.cshtml" />
+    <Content Include="Views\UserProfiles\OwnProfileDetails.cshtml" />
+    <Content Include="Views\Home\pwr.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

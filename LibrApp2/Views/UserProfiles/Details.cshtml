@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <table class="table table-hover table-bordered">
-    <thead>
+    <thead class="bg-primary">
         <tr>
             <th>@Html.DisplayNameFor(model => model.Username)</th>
             @if (User.IsInRole("Admin"))
@@ -32,7 +32,7 @@
 
 <h4>Books on bookshelf of @Model.Username</h4>
 <table id="books" class="table table-hover table-bordered">
-    <thead>
+    <thead class="bg-info">
         <tr>
             <th>@Html.DisplayNameFor(model => model.Books)</th>
         </tr>
@@ -48,22 +48,22 @@
 
 <h4>Reviews written by @Model.Username</h4>
 <table id="reviews" class="table table-hover table-bordered">
-    <thead>
+    <thead class="bg-info">
         <tr>
             <th class="col-md-2">@Html.DisplayNameFor(model => model.Reviews.First().Book.Name)</th>
-            <th class="col-md-9">@Html.DisplayNameFor(model => model.Reviews.First().Content)</th>
             <th class="col-md-1">@Html.DisplayNameFor(model => model.Reviews.First().Rate)</th>
+            <th class="col-md-9">@Html.DisplayNameFor(model => model.Reviews.First().Content)</th>
         </tr>
     </thead>
     <tbody>
-            @foreach (var review in Model.Reviews)
-            {
-                <tr>
-                <td>@Html.DisplayFor(modelReview => review.Book.Name)</td>
-                <td>@Html.DisplayFor(modelReview => review.Content)</td>
-                <td>@Html.DisplayFor(modelReview => review.Rate)</td>
-                    </tr>
-            }
+        @foreach (var review in Model.Reviews)
+        {
+        <tr>
+            <td>@Html.DisplayFor(modelReview => review.Book.Name)</td>
+            <td>@Html.DisplayFor(modelReview => review.Rate)</td>
+            <td>@Html.DisplayFor(modelReview => review.Content)</td>
+        </tr>
+        }
     </tbody>
 </table>
 

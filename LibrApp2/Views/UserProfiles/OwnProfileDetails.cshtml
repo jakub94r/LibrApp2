@@ -1,0 +1,85 @@
+﻿@model LibrApp2.Models.UserProfile
+@using Microsoft.AspNet.Identity
+
+@{
+    /**/
+
+    ViewBag.Title = "OwnProfileDetails";
+}
+
+<h2>Details of your profile</h2>
+<h3>This is how other people see your profile</h3>
+
+@if (User.Identity.GetUserId() == Model.AspNetUserId)
+{
+    <table class="table table-hover table-bordered">
+        <thead class="bg-primary">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Username)</th>
+                <th class="col-md-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.Username)</td>
+                <td>
+                    @Html.ActionLink("Edit username", "Edit", new { id = Model.Id }) | 
+                    @Html.ActionLink("Settings", "Index", "Manage", new { id = "loginLink" }, null)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    @Html.ActionLink("Manage books and reviews", "MyBookshelf", "Books", null, new { @class = "btn btn-primary" })
+
+
+    <h4>Books on bookshelf of @Model.Username</h4>
+    <table id="books" class="table table-hover table-bordered">
+        <thead class="bg-default">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Books)</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var book in Model.Books)
+            {
+                <tr><td>@Html.ActionLink(book.Name, "Details", "Books", new { id = book.Id }, null)</td></tr>
+            }
+        </tbody>
+    </table>
+
+
+
+    <h4>Reviews written by @Model.Username</h4>
+    <table id="reviews" class="table table-hover table-bordered">
+        <thead class="bg-default">
+            <tr>
+                <th class="col-md-2">@Html.DisplayNameFor(model => model.Reviews.First().Book.Name)</th>
+                <th class="col-md-1">@Html.DisplayNameFor(model => model.Reviews.First().Rate)</th>
+                <th class="col-md-9">@Html.DisplayNameFor(model => model.Reviews.First().Content)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var review in Model.Reviews)
+            {
+            <tr>
+                <td>@Html.DisplayFor(modelReview => review.Book.Name)</td>
+                <td>@Html.DisplayFor(modelReview => review.Rate)</td>
+                <td>@Html.DisplayFor(modelReview => review.Content)</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#books").dataTable();
+            $("#reviews").dataTable();
+        });
+    </script>
+}

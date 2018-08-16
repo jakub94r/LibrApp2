@@ -6,16 +6,16 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table id="userProfiles" class="table table-hover table-bordered">
-    <thead>
+    <thead class="bg-default">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Username)
             </th>
-            <th>Admin options</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th class="col-md-2">Admin options</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -23,13 +23,15 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Username)
+                    @Html.ActionLink(item.Username, "Details", new { id = item.Id })
                 </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                }
             </tr>
         }
     </tbody>

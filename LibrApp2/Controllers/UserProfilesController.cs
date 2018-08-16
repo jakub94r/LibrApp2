@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LibrApp2.Models;
+using Microsoft.AspNet.Identity;
 
 namespace LibrApp2.Controllers
 {
@@ -19,6 +20,19 @@ namespace LibrApp2.Controllers
         public ActionResult Index()
         {
             return View(db.UserProfiles.ToList());
+        }
+
+        // GET: UserProfiles/Details/5
+        public ActionResult OwnProfileDetails()
+        {
+            String userId = User.Identity.GetUserId();
+            UserProfile userProfile = db.UserProfiles.SingleOrDefault(u => u.AspNetUserId == userId);
+            if (userProfile == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(userProfile);
         }
 
         // GET: UserProfiles/Details/5
