@@ -21,30 +21,58 @@
             <td>@Html.DisplayFor(model => model.Username)</td>
             @if (User.IsInRole("Admin"))
             {
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
-            </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+                </td>
             }
-            </tr>
+        </tr>
     </tbody>
 </table>
 
 <h4>Books on bookshelf of @Model.Username</h4>
-<table class="table table-hover table-bordered">
+<table id="books" class="table table-hover table-bordered">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Books)</th>
         </tr>
     </thead>
     <tbody>
-        
-            @foreach (var book in Model.Books)
+
+        @foreach (var book in Model.Books)
+        {
+            <tr><td>@Html.ActionLink(book.Name, "Details", "Books", new { id = book.Id }, null)</td></tr>
+        }
+    </tbody>
+</table>
+
+<h4>Reviews written by @Model.Username</h4>
+<table id="reviews" class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th class="col-md-2">@Html.DisplayNameFor(model => model.Reviews.First().Book.Name)</th>
+            <th class="col-md-9">@Html.DisplayNameFor(model => model.Reviews.First().Content)</th>
+            <th class="col-md-1">@Html.DisplayNameFor(model => model.Reviews.First().Rate)</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var review in Model.Reviews)
             {
-                <tr><td>@Html.ActionLink(book.Name, "Details", "Books", new { id = book.Id }, null)</td></tr>
+                <tr>
+                <td>@Html.DisplayFor(modelReview => review.Book.Name)</td>
+                <td>@Html.DisplayFor(modelReview => review.Content)</td>
+                <td>@Html.DisplayFor(modelReview => review.Rate)</td>
+                    </tr>
             }
     </tbody>
 </table>
 
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#books").dataTable();
+            $("#reviews").dataTable();
+        });
+    </script>
+}

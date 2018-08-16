@@ -7,105 +7,144 @@
 <h3>Manage authors of @Model.BookName</h3>
 
 <h4>Current authors</h4>
-<table id="currentAuthors" class="table table-hover table-bordered">
-    <thead>
-        <tr>
-            <th class="col-md-2">
-                @Html.DisplayNameFor(model => model.AlreadyAuthors.First().Id)
-            </th>
-            <th class="col-md-6">
-                @Html.DisplayNameFor(model => model.AlreadyAuthors.First().FullName)
-            </th>
-            <th class="col-md-4"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.AlreadyAuthors)
-        {
+<div id="globalDiv">
+    <table id="currentAuthors" class="table table-hover table-bordered">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.ActionLink(item.FullName, "Edit", "Authors", new { id = item.Id }, null)
-                </td>
-                <td>
-                    @Html.ActionLink("Remove from the book", "RemoveAuthorFromBook", new { bookId = Model.BookId, authorId = item.Id }, new { id = "removeButton" })
-                </td>
+                <th class="col-md-2">
+                    @Html.DisplayNameFor(model => model.AlreadyAuthors.First().Id)
+                </th>
+                <th class="col-md-6">
+                    @Html.DisplayNameFor(model => model.AlreadyAuthors.First().FullName)
+                </th>
+                <th class="col-md-4"></th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AlreadyAuthors)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.FullName, "Edit", "Authors", new { id = item.Id }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remove from the book", "RemoveAuthorFromBook", new { bookId = Model.BookId, authorId = item.Id }, new { id = "removeButton" })
+                    </td>
+                </tr>
 
-        }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
 
-<h4>Available authors</h4>
-<table id="availableAuthors" class="table table-hover table-bordered">
+    <h4>Available authors</h4>
+    <table id="availableAuthors" class="table table-hover table-bordered">
 
-    <thead>
-        <tr>
-            <th class="col-md-2">
-                @Html.DisplayNameFor(model => model.AuthorsList.First().Id)
-            </th>
-            <th class="col-md-6">
-                @Html.DisplayNameFor(model => model.AuthorsList.First().FullName)
-            </th>
-            <th class="col-md-4"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.AuthorsList)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.ActionLink(item.FullName, "Edit", "Authors", new { id = item.Id }, null)
-                </td>
-                <td>
-                    @Html.ActionLink("Add as author", "AddAuthorToBook", new { bookId = Model.BookId, authorId = item.Id }, new { id = "addButton" })
-                </td>
+                <th class="col-md-2">
+                    @Html.DisplayNameFor(model => model.AuthorsList.First().Id)
+                </th>
+                <th class="col-md-6">
+                    @Html.DisplayNameFor(model => model.AuthorsList.First().FullName)
+                </th>
+                <th class="col-md-4"></th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AuthorsList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.FullName, "Edit", "Authors", new { id = item.Id }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Add as author", "AddAuthorToBook", new { bookId = Model.BookId, authorId = item.Id }, new { id = "addButton" })
+                    </td>
+                </tr>
 
-        }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section scripts
 {
     <script>
         $(document).ready(function () {
-            $("#availableAuthors").dataTable();
+            var availableAuthorsTable = $("#availableAuthors").DataTable();
+            var currentAuthorsTable = $("#currentAuthors").DataTable();
+            var authorsModified = false;
 
+            function notify() {
+                var n = noty({
+                    text: ('Tip: <br />Refresh page if you want to see Add & Remove options for the authors you just edited'),
+                    layout: 'topRight',
+                    theme: 'relax',
+                    type: 'information',
+                    animation: {
+                        open: 'animated fadeIn',
+                        close: 'animated fadeOut'
+                    },
+                    timeout: 8000
+                });
+            }
 
-            var global = function () {
-            var currentTable = $("#currentAuthors").on("click", "#removeButton", function (e) {
+            $("#currentAuthors").on("click", "#removeButton", function (e) {
                 var button = $(this);
                 e.preventDefault();
                 $.ajax({
-
-                    url: $(this).attr("href"), // comma here instead of semicolon
+                    url: $(this).attr("href"),
                     success: function () {
-                        console.log("Success");
-                        button.parents("tr").remove().draw()
+                        currentAuthorsTable.row(button.parents("tr")).remove().draw()
 
+                        button.text()
+                        //button.attr('href', function () {
+                        //    return this.href.replace('href', '/books/AddAuthorToBook');
+                        //});
+                        button.text("")
+                        button.removeAttr("href")
+                        availableAuthorsTable.rows.add(button.parents("tr")).draw();
+
+                        if (!authorsModified) {
+                            authorsModified = true;
+                            notify();
+                        }
+                        return false;
                     }
                 });
             });
 
-            var availableTable = $("#availableAuthors").on("click", "#addButton", function (e) {
+            $("#availableAuthors").on("click", "#addButton", function (e) {
                 var button = $(this);
                 e.preventDefault();
                 $.ajax({
-
-                    url: $(this).attr("href"), // comma here instead of semicolon
+                    url: $(this).attr("href"),
                     success: function () {
-                        console.log("Success");
-                        button.parents("tr").remove().draw()
+                        availableAuthorsTable.row(button.parents("tr")).remove().draw()
+                        button.text("")
+                        button.removeAttr("href")
+                        currentAuthorsTable.rows.add(button.parents("tr")).draw();
+
+                        if (!authorsModified) {
+                            authorsModified = true;
+                            notify();
+                        }
+                            return false;
                     }
                 });
-                });
+            });
+
+            function getURLParameter(url, name) {
+                return (RegExp(name + '=' + '(.+?)(&|$)').exec(url) || [, null])[1];
             }
+            return false;
+
         });
     </script>
 }

@@ -4,11 +4,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>List of books</h2>
+<h2>List of books (server-side version)</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-sm" })
+    @Html.ActionLink("API version", "IndexAPI", null, new { @class = "btn btn-default btn-sm" })
 </p>
+
+
 
 <table id="books" class="table table-hover table-bordered">
     <thead>
@@ -87,10 +90,10 @@
                             text: 'Book was added to your bookshelf',
                             layout: 'topRight',
                             theme: 'relax',
-                            type: 'smallSuccess',
+                            type: 'success',
                             animation: {
-                                open: 'animated bounceInRight',  // Animate.css class names
-                                close: 'animated zoomOutRight' // Animate.css class names
+                                open: 'animated bounceInRight',
+                                close: 'animated zoomOutRight'
                             },
                             timeout: 2000
                         });
@@ -102,8 +105,8 @@
                             theme: 'relax',
                             type: 'warning',
                             animation: {
-                                open: 'animated bounceInRight',  // Animate.css class names
-                                close: 'animated zoomOutRight' // Animate.css class names
+                                open: 'animated bounceInRight',
+                                close: 'animated zoomOutRight'
                             },
                             timeout: 2200
                         });

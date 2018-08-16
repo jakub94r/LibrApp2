@@ -131,7 +131,7 @@ namespace LibrApp2.Controllers
             //call SaveChanges from context to confirm inserts
             db.SaveChanges();
 
-            return RedirectToAction("ShowAvailableAuthors", new { bookId = bookId });
+            return new EmptyResult();
         }
 
         [Authorize(Roles = RoleName.Admin)]
@@ -154,13 +154,12 @@ namespace LibrApp2.Controllers
             //call SaveChanges from context to confirm inserts
             db.SaveChanges();
 
-            return RedirectToAction("ShowAvailableAuthors", new { bookId = bookId });
-
+            return new EmptyResult();
             //return RedirectToAction("RemoveAuthorFromBook", new { bookId = bookId, authorId = authorId });
 
         }
         // GET: Books
-        public ActionResult IndexStandard()
+        public ActionResult Index()
         {
             if (User.IsInRole(RoleName.Admin))
                 return View(db.Books.Include(b => b.Genre).Include(b => b.Authors).ToList());
@@ -168,10 +167,10 @@ namespace LibrApp2.Controllers
             return View("IndexReadOnly", db.Books.Include(b => b.Genre).Include(b => b.Authors).ToList());
         }
 
-        public ActionResult Index()
+        public ActionResult IndexAPI()
         {
             if (User.IsInRole(RoleName.Admin))
-                return View("IndexAPI");
+                return View();
 
             return View("IndexAPIReadOnly");
         }
@@ -225,7 +224,7 @@ namespace LibrApp2.Controllers
             {
                 db.Books.Add(book);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexAPI");
             }
 
             return View(book);
@@ -266,7 +265,7 @@ namespace LibrApp2.Controllers
             {
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexAPI");
             }
             return View(book);
         }
@@ -296,7 +295,7 @@ namespace LibrApp2.Controllers
             Book book = db.Books.Find(id);
             db.Books.Remove(book);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexAPI");
         }
 
         protected override void Dispose(bool disposing)

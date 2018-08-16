@@ -16,6 +16,7 @@ namespace LibrApp2
                 "~/Scripts/noty/jquery.noty.js",
                 "~/Scripts/noty/layouts/topRight.js",
                 "~/Scripts/noty/themes/relax.js",
+                "~/Scripts/noty/themes/relax2.js",
                 "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -30,7 +31,7 @@ namespace LibrApp2
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/theme-bootstrap.css",
                       "~/Content/animate.css",
                       "~/Content/datatables/css/datatables.bootstrap.css",
                       "~/Content/site.css"));
