@@ -5,6 +5,8 @@
 }
 
 <h2>List of books (server-side version)</h2>
+<h5>This is standard version of the view</h5>
+
 
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary btn-sm" })
@@ -55,7 +57,10 @@
                 {
                     <td></td>}
                 <td>
-                    <p>@Html.ActionLink("Add to bookshelf", "AddToBookshelf", new { id = item.Id }, new { id = "addButton" })</p>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <p>@Html.ActionLink("Add to bookshelf", "AddToBookshelf", new { id = item.Id }, new { id = "addButton" })</p>
+                    }
                     <p>@Html.ActionLink("Show reviews", "ShowReviews", "Reviews", new { id = item.Id }, null)</p>
                 </td>
                 <td>

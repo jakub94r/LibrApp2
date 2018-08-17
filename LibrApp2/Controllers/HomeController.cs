@@ -31,5 +31,11 @@ namespace LibrApp2.Controllers
         {
             return View();
         }
+
+        public ActionResult HALP()
+        {
+            return View();
+
+        }
     }
 }

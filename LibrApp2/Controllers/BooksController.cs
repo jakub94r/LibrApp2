@@ -39,7 +39,7 @@ namespace LibrApp2.Controllers
             var currentBook = db.Books.SingleOrDefault(b => b.Id == id);
 
             if (currentUser == null || currentBook == null || currentUserId == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
             if (currentUser.Books.SingleOrDefault(b => b.Id == currentBook.Id) != null)
             {

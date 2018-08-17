@@ -31,7 +31,16 @@
         @Html.DisplayFor(modelItem => Model.Name)
     </td>
     <td>
-        @Model.DatePublished.Value.ToShortDateString()
+        @if (Model.DatePublished.HasValue)
+        {
+            @Model.DatePublished.Value.ToShortDateString()
+
+        }
+        else
+        {
+            <text>Not specified</text>
+        }
+
     </td>
     <td>
         @Html.DisplayFor(modelItem => Model.Genre.Name)

@@ -1,12 +1,82 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
+<h2>Press the buttons to see the details</h2>
 
-<div style="margin-bottom: 20px; text-align: justify; border: solid green 1px; border-radius: 15px;" class="col-md-12 col-sm-12 container bg-success">
-    <p style="margin: 10px;"><b>The quick idea</b> <br /> LibrApp 2 is a library of books that admins can manage and users can view. Users that log in to the applciation have their own profiles that they can add books to (bookshelves) and customize in various ways. Additionally they can view other users' profiles as well as write reviews and grant ratings to the books. Full list and depth of planned functionalities is a bit more extensive than that, but proper presentation will be done once the application is finished.</p>
+<div id="accordion-1" class="container">
+    <p style="margin-bottom :0px;" align="center"><button class="btn-default btn col-md-12"><span class="glyphicon glyphicon-arrow-down" style="color: lightgray"></span> Ok so what is this?</button></p>
+    <div style=" border: solid green 1px; border-radius: 10px;" class="col-md-12 container bg-success">
+        <p style="margin: 10px; text-align: justify;">
+            <br /><b>The idea</b>
+            <br />LibrApp was originally supposed to be a simple web application resembling library for a small group project at the university.
+            I wanted to learn some .Net and MVC in the process of developing it, unfortunately due to some unexpected problems (manpower and hardware, who would've thought?) it had to be developed rapidly, thus it was decided to use technologies more familiar at time (PHP) so we could meet the deadline.
+            <br />This is <b>LibrApp2</b> - a project I took on my own after the semester, so that I could finally learn some .Net
+
+            <br /><br /><b>Improtant to note:</b> It is still relatively simple app - by no means any kind of astonishing achievement of web development.
+            The idea is to get fully functional app up and running with proper back-end, front-end and all functionalities operating in order (including relatively proper safety/performance measures).
+            It's not about the sheer amount and extent of functionalities or even the overall look of the application - it's about the working thing. It is, after all, a newbie project.
+        </p>
+    </div>
+    <p style="margin-bottom :0px;" align="center"><button class="btn-primary btn col-md-12"><span class ="glyphicon glyphicon-arrow-down" style="color: lightgray"></span> Actual features</button></p>
+    <div style=" border: solid #0C487F 1px; border-radius: 10px;" class="col-md-12 container bg-info">
+        <p style="margin: 10px; text-align: justify;">
+            <br /><b>Books: </b> Users can view list of books from database, view details of any given book and add book to their bookshelf.
+            <br /><b>Bookshelf: </b> User can manage his books, give them reviews and ratings and manage previous reviews
+            <br /><b>Authors: </b> Users can view list of authors with their details (details as possibility in future)
+            <br /><b>User Profiles: </b> Users can view profiles of other users - including their bookshelves, reviews and ratings
+
+            <br /><br />Some of the Books views come in two versions: <b>Client-side API</b> version as well standard <b>server-side</b> version. This was done just so I could see the difference in development for myself
+
+            <br /><br /><b>Additionally:</b>
+            <br /><b>Admins</b> can add, edit and delete Books, Users, Reviews, Authors and manage books-authors relationships
+        </p>
+    </div>
+    <p style="margin-bottom :0px;" align="center"><button class="btn-default btn col-md-12"><span class="glyphicon glyphicon-arrow-down" style="color: lightgray"></span> Tools and languages used</button></p>
+    <div style=" border: solid green 1px; border-radius: 10px;" class="col-md-12 container bg-success">
+        <p style="margin: 10px; text-align: justify;">
+            <br /><b>Languages</b>
+            <br />C# / .Net
+            <br />JavaScript / JQuery
+            <br />HTML5 & CSS3
+            <br />
+            <br /><b>Database</b>
+            <br />Entity Framework (mostly code-first approach)
+            <br />SQL / T-SQL
+            <br />
+            <br /><b>Additional frameworks/libraries/techniques</b>
+            <br />JQuery UI
+            <br />Noty
+            <br />Bootstrap
+            <br />LINQ
+            <br />ASPNet Identity
+            <br />
+            <br /><b>Tools</b>
+            <br />Visual Studio 17
+            <br />MS SQL Server 2017
+            <br />Chrome developer tools
+            <br />
+            <br /><b>Honorable mentions</b>
+            <br />Unfathomable number of tutorials, documentations and StackOverflow threads
+            <br />A lot of dark chocolate
+        </p>
+    </div>
 </div>
 
-<div style="margin-bottom: 20px; text-align: justify; border: solid #0C487F 1px; border-radius: 15px;" class="col-md-12 col-sm-12 container bg-info">
-    <p style="margin: 10px;"><b>The details</b> <br /> LibrApp was originally a simple web application developed as a small group project at the university. At first the app was supposed to be developed in .Net, either using ASP WinForms or MVC. Unfortunately due to some sudden problems with manpower and hardware it had to be developed rapidly, thus it was decided to use familiar at the time PHP/JS and implement only the basics. <br />As a result I never had the chance to learn proper use of .Net, so decided to start the project again on my own utilizing MVC and Entity Framework, along with a few other technologies (there's always one more JQuery plugin to use). <br /> <br /> <b>Improtant to note:</b> It is still relatively simple app - by no means any kind of astonishing achievement of web development. The idea is to get fully functional app up and running with proper back-end, front-end and all functionalities operating in order (also with necessary safety/performance measures correctly implemented). It's not about the sheer amount or extent of functionalities, it's about proper implementation. It is, after all, a newbie project.</p>
-</div>
+@section scripts
+{
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $(function () {
+                $("#accordion-1").accordion({
+                    heightStyle: "content"
+                    });
+            });
+
+            $("#Activate").click(function () {
+                $("#selector").accordion("activate");
+            });
+        });
+    </script>
+}

@@ -683,7 +683,7 @@
     <Content Include="Views\Shared\_deleteModalPopUp.cshtml" />
     <Content Include="Views\Books\IndexAPIReadOnly.cshtml" />
     <Content Include="Views\UserProfiles\OwnProfileDetails.cshtml" />
-    <Content Include="Views\Home\pwr.cshtml" />
+    <Content Include="Views\Home\HALP.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

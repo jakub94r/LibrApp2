@@ -31,3 +31,11 @@ textarea {
 .myCustomClass {
     width: 800px !IMPORTANT;
 }
+
+.pwr2Div {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    border: solid 2px red;
+}
+

@@ -1,10 +1,16 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
+
 @{
     ViewBag.Title = "IndexAPI";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>List of books</h2>
+<h5>This is API-based version of the view</h5>
+
+<div id="review-buttons">
+
+</div>
 
 <p>
     @Html.ActionLink("Non-API version", "Index", null, new { @class = "btn btn-default btn-sm" })
@@ -17,7 +23,7 @@
             <th class="col-md-2">Genre</th>
             <th class="col-md-2">Authors</th>
             <th class="col-md-1">Rate</th>
-            <th class="col-md-2"></th>
+            <th id="AddButtons" class="col-md-2"></th>
         </tr>
     </thead>
     <tbody></tbody>
@@ -30,6 +36,10 @@
     <script src="~/Scripts/noty/jquery.noty.js"></script>
     <script src="~/Scripts/noty/layouts/topRight.js"></script>
     <script src="~/Scripts/noty/themes/relax.js"></script>
+
+    <script>
+        var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+    </script>
 
     <script>
         $(document).ready(function () {
@@ -64,14 +74,19 @@
                     {
                         data: "Id",
                         render: function (data) {
-                            if (true) {
-                                return "<button id='addButton' class='btn-link js-bookshelf' data-href=/books/AddToBookshelf/" + data + " data-book-id=" + data + ">Add to bookshelf</button>" + "<button class='btn-link js-reviews' data-book-id=" + data + ">Show reviews</button>";
+                            if (userAuthorized) {
 
+                                return "<button id='addButton' class='btn-link js-bookshelf' data-href=/books/AddToBookshelf/" + data + " data-book-id=" + data + ">Add to bookshelf</button>" + "<button class='btn-link js-reviews' data-book-id=" + data + ">Show reviews</button>";
                             }
+                            else {
+                                return "<button class='btn-link js-reviews' data-book-id=" + data + ">Show reviews</button>";
+                            }
+
                         }
                     }
                 ]
             });
+            /**/
 
             $("#books").on("click", ".js-reviews", function () {
                 var button = $(this);
