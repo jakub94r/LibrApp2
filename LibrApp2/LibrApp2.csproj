@@ -455,7 +455,6 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\libra-bootstrap.css" />
     <Content Include="Content\theme-bootstrap.css" />
-    <Content Include="Content\sandstone-bootstrap.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -585,6 +584,7 @@
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -616,7 +616,6 @@
     <Content Include="Scripts\noty\themes\bootstrap.js" />
     <Content Include="Scripts\noty\themes\default.js" />
     <Content Include="Scripts\noty\themes\relax.js" />
-    <Content Include="Scripts\noty\themes\relax2.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -7,12 +7,13 @@
     <p style="margin-bottom :0px;" align="center"><button class="btn-primary btn col-md-12"><span class="glyphicon glyphicon-arrow-down" style="color: lightgray"></span> What do I do?</button></p>
     <div style=" border: solid #0C487F 1px; border-radius: 10px;" class="col-md-12 container bg-info">
         <p style="margin: 10px; text-align: justify;">
-            <br />Below is the proposed order of navigation around the page (order of pressing buttons at the top bar)
+            <br />Actual tour is yet to be implemented in the later stage of the development. Instead there is a short list of user/admin actions available in the application below:
+            <br /><b>Note:</b> some activities become available only if a user - or admin - is logged in
             <br />Please press the big green "Help buttons" at the bottom for additional info.
             <br /><br /><b>1. Log in</b> You can log in with one of the credentials shown at the right side of the login page instead of registring new account
-            <br /><b>2a. Books</b> Once you are logged you can add book to your bookshelf by pressing "Add to bookshelf" button
-            <br /><b>2b. Books</b> If you logged in as admin - try using "Edit" and "Delete" from Admin Options at the right to delete or edit a book
-            <br /><b>2c. Books</b> If you logged in as admin - try using "Manage authors" from Admin Options at the right to assign/unassign author(s) from book
+            <br /><b>2. Books</b> Once you are logged you can add book to your bookshelf by pressing "Add to bookshelf" button
+            <br /><b>2.1. Books</b> If you're logged in as an admin - try using "Edit" and "Delete" from Admin Options at the right to delete or edit a book
+            <br /><b>2.2. Books</b> If you're logged in as an admin - try using "Manage authors" from Admin Options at the right to assign/unassign author(s) from book
             <br /><b>3. My Bookshelf</b> Here you can add review and rate your books and edit your reviews and remove books from bookshelf (your reviews remain in the book's details until you remove them yourself)
             <br /><b>4. Book details</b> Clicking at the book title anywhere will lead to book details page. If you are logged in as an admin you can manage book and it's users/reviews
             <br /><b>5. Reviews/Users/Authors</b> Admins can freely manage users and authors and moderate reviews in the page
@@ -22,7 +23,8 @@
     <p style="margin-bottom :0px;" align="center"><button class="btn-default btn col-md-12"><span class="glyphicon glyphicon-arrow-down" style="color: lightgray"></span> Help buttons</button></p>
     <div style=" border: solid green 1px; border-radius: 10px;" class="col-md-12 container bg-success">
         <p style="margin: 10px; text-align: justify;">
-           <br /> Well I thought of a web of buttons to put in most of the views, so that user can press them and then a notification will appear giving possible instructions. These buttons would appear for new users and form a sort of tutorial over the page.Something like "Now try pressing the button at the right to add authors to books" and so on. 
+           <br /><b>TODO</b>
+            <br /> Well I thought of a web of buttons to put in most of the views, so that user can press them and then a notification will appear giving possible instructions. These buttons would appear for new users and form a sort of tutorial over the page.Something like "Now try pressing the button at the right to add authors to books" and so on. 
             <br />I called it "Hig Assistance Leading Pushbuttons", or "HALP" for short. 
             <br />Only I'm going to move away for some time so "HALP" system recieves a ToDo status for now and the brief instruction above will have to be enough for now. Sorry!
         </p>
@@ -46,4 +48,3 @@
             });
         });
     </script>
-}
